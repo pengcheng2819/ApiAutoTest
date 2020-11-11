@@ -1,0 +1,12 @@
+/*表单公共样式*/
+  .separate {
+    border-left: 6px solid #409eff;
+    padding-left: 20px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    color: #409eff;
+  }
+
+  .el-select {
+    width: 100%;
+  }
