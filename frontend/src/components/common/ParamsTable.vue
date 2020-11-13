@@ -4,8 +4,9 @@
       <el-table-column type="expand">
         <template slot-scope="prop">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item v-for="(item,index) in value[prop.$index].condition" :key="index" :label="condioptions[index].title">
-              <el-input></el-input>
+            <el-form-item v-for="(item,index) in value[prop.$index].condition" :key="index"
+                          :label="condioptions[index].title" >
+              <el-input :placeholder="item"></el-input>
             </el-form-item>
           </el-form>
         </template>
@@ -37,7 +38,7 @@
       </el-table-column>
       <el-table-column prop="condition" label="取值范围">
         <template slot-scope="prop">
-          <el-select v-model="value[prop.$index].condition" collapse-tags filterable multiple placeholder="取值范围" >
+          <el-select v-model="value[prop.$index].condition" collapse-tags filterable multiple placeholder="取值范围">
             <el-option
               v-for="item in condioptions"
               :key="item.value"
@@ -82,7 +83,7 @@
     data() {
       return {
         options: common.valueType,
-        condioptions:common.condioptions,
+        condioptions: common.condioptions['text'],
       }
     },
     methods: {
@@ -107,18 +108,8 @@
 </script>
 
 <style scoped>
-  .demo-table-expand {
-    font-size: 0;
-  }
-
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
+  .el-form-item {
+    margin-right: 15px;
+    margin-bottom: 10px;
   }
 </style>

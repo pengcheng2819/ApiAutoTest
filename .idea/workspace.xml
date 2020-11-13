@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fe755bd-f89f-4666-bf3b-c960c81b8fcf" name="Default Changelist" comment="增加表单项">
-      <change beforePath="$PROJECT_DIR$/.idea/ApiAutoTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ApiAutoTest.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApiAutoTest/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ApiAutoTest/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/common/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/common/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +189,8 @@
       <workItem from="1604585194208" duration="3966000" />
       <workItem from="1604818103069" duration="15177000" />
       <workItem from="1605097395716" duration="1438000" />
-      <workItem from="1605151498084" duration="1597000" />
+      <workItem from="1605151498084" duration="6624000" />
+      <workItem from="1605164110466" duration="18883000" />
     </task>
     <task id="LOCAL-00001" summary="Json编辑器">
       <created>1596893940121</created>
@@ -299,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605152548013</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="upload build">
+      <created>1605153157159</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1605153157159</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,18 +332,19 @@
     <MESSAGE value="增加条件项" />
     <MESSAGE value="modify ignore files" />
     <MESSAGE value="增加表单项" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加表单项" />
+    <MESSAGE value="upload build" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload build" />
   </component>
   <component name="WindowStateProjectService">
     <state x="275" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598174025146">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1598174025146" />
-    <state x="484" y="0" key="CommitChangelistDialog2" timestamp="1605152546241">
+    <state x="596" y="86" key="CommitChangelistDialog2" timestamp="1605153155633">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="344" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1605096925347" />
-    <state x="484" y="0" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605152546241" />
+    <state x="596" y="86" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605153155633" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1604584803692">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -405,15 +418,16 @@
     </state>
     <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1603976286329" />
     <state x="259" y="0" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605152338939" />
-    <state x="387" y="137" key="Vcs.Push.Dialog.v2" timestamp="1605152551469">
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2" timestamp="1605153159455">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1605097059421" />
-    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605152551469" />
-    <state x="363" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1605097459703">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605153159455" />
+    <state x="510" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1605164288539">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="363" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1605097459703" />
+    <state x="510" y="266" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605164288539" />
     <state x="683" y="0" width="683" height="728" maximized="true" key="dock-window-1" timestamp="1604326101839">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

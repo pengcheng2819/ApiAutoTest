@@ -44,18 +44,19 @@ export default {
     memo: ''
   },
 
-    condioptions: [
+    condioptions: {'text':[
     {'title': '字符长度', 'value': 'length'},
     {'title': '特殊字符', 'value': 'special'},
     {'title': '正则', 'value': 'regular'},
   ],
+    },
   cditDefault:{
     'text':{
       'length':{
         'gt':0,
         'lt':0,
         'bt':[0,1],
-        'et':0
+        'eq':0
       },
       'special':{
         'include':'',
