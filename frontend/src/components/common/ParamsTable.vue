@@ -3,7 +3,7 @@
     <el-table :data="value" style="width: 100%" size="mini" >
       <el-table-column type="expand">
         <template slot-scope="prop">
-          <el-form label-position="left" inline class="demo-table-expand" :disabled="disabled">
+          <el-form label-width="100px" align="left" inline :disabled="disabled">
             <el-form-item v-for="(item,index) in value[prop.$index].condition" :key="index"
                           :label="condioptions[value[prop.$index].type][index].title" >
               <el-input :placeholder="item" v-model="value[prop.$index].conditionValue[item]"></el-input>
