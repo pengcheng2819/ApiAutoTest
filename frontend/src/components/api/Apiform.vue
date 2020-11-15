@@ -45,17 +45,17 @@
       <div class="separate">请求参数</div>
       <el-tabs v-model="activeName" style="padding-bottom: 30px">
         <el-tab-pane label="Params" name="first">
-          <params-table v-model="apiform.params" :is-show-del="true"></params-table>
+          <params-table v-model="apiform.params" :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
         <el-tab-pane label="Body" name="second">
           <!--          <json-viewer v-if="isView" v-model="apiform.base_body" :expand-depth=5 copyable boxed sort></json-viewer>-->
-          <params-table v-model="apiform.base_body" :is-show-del="true"></params-table>
+          <params-table v-model="apiform.base_body" :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
         <el-tab-pane label="Headers" name="third">
-          <params-table v-model="apiform.base_head" :is-show-del="true"></params-table>
+          <params-table v-model="apiform.base_head" :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
         <el-tab-pane label="Cookies" name="fourth">
-          <params-table v-model="apiform.cookies" :is-show-del="true"></params-table>
+          <params-table v-model="apiform.cookies" :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
       </el-tabs>
       <el-button type="primary" @click="outMsg" plain v-if="isNew||isEdit">

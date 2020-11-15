@@ -1,18 +1,18 @@
 <template>
   <div>
-    <el-table :data="value" style="width: 100%" size="mini">
+    <el-table :data="value" style="width: 100%" size="mini" >
       <el-table-column type="expand">
         <template slot-scope="prop">
-          <el-form label-position="left" inline class="demo-table-expand">
+          <el-form label-position="left" inline class="demo-table-expand" :disabled="disabled">
             <el-form-item v-for="(item,index) in value[prop.$index].condition" :key="index"
-                          :label="condioptions[index].title" >
-              <el-input :placeholder="item"></el-input>
+                          :label="condioptions[value[prop.$index].type][index].title" >
+              <el-input :placeholder="item" v-model="value[prop.$index].conditionValue[item]"></el-input>
             </el-form-item>
           </el-form>
         </template>
       </el-table-column>
-      <!--      <el-table-column type="index" label="序号" width="60">-->
-      <!--      </el-table-column>-->
+            <el-table-column type="index" label="序号" width="60">
+            </el-table-column>
       <el-table-column prop="paramname" label="参数名" width="220">
         <template slot-scope="prop">
           <el-input v-model="value[prop.$index].paramname" @change="addRow(prop.$index)"></el-input>
@@ -40,7 +40,7 @@
         <template slot-scope="prop">
           <el-select v-model="value[prop.$index].condition" collapse-tags filterable multiple placeholder="取值范围">
             <el-option
-              v-for="item in condioptions"
+              v-for="item in condioptions[value[prop.$index].type]"
               :key="item.value"
               :label="item.title"
               :value="item.value">
@@ -70,7 +70,7 @@
       </el-table-column>
 
     </el-table>
-    <el-button v-if="false" @click="outmsg">run</el-button>
+    <el-button v-if="true" @click="outmsg">run</el-button>
   </div>
 </template>
 
@@ -79,11 +79,11 @@
 
   export default {
     name: "ParamsTable",
-    props: ['value', 'isShowDel'],
+    props: ['value', 'isShowDel','disabled'],
     data() {
       return {
         options: common.valueType,
-        condioptions: common.condioptions['text'],
+        condioptions: common.condioptions,
       }
     },
     methods: {
@@ -100,7 +100,8 @@
       },
       //切换类型的时候，把当前值置空
       setNull(index) {
-        this.value[index].value = null
+        this.value[index].conditionValue = {};
+        this.value[index].condition = [];
       },
     }
   }

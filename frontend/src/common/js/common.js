@@ -15,7 +15,7 @@ export default {
   editapicase: 'api/updatecase/',
   deleteapicase: 'api/delapicase/',
   detailapicase: '/casedetail/',
-  runcase : 'api/runcase/',
+  runcase: 'api/runcase/',
   testruncase: 'api/testruncase/',
 
   requestMethod: ['GET', 'POST', 'PUT'],         //请求方法
@@ -32,6 +32,7 @@ export default {
   valueType: [
     {'title': '字符串', 'value': 'text'},
     {'title': '数值', 'value': 'number'},
+    {'title': '整数', 'value': 'int'},
     {'title': '布尔值', 'value': 'checkbox'},
     {'title': '文件', 'value': 'file'},
     {'title': 'null', 'value': null},
@@ -41,28 +42,38 @@ export default {
     notnull: '',
     type: 'text',
     condition: [],
+    conditionValue: {},
     memo: ''
   },
 
-    condioptions: {'text':[
-    {'title': '字符长度', 'value': 'length'},
-    {'title': '特殊字符', 'value': 'special'},
-    {'title': '正则', 'value': 'regular'},
-  ],
-    },
-  cditDefault:{
-    'text':{
-      'length':{
-        'gt':0,
-        'lt':0,
-        'bt':[0,1],
-        'eq':0
+  condioptions: {
+    'text': [
+      {'title': '字符长度', 'value': 'length'},
+      {'title': '特殊字符', 'value': 'special'},
+      {'title': '正则', 'value': 'regular'},
+    ],
+    'int': [
+      {'title': '数值范围', 'value': 'length'},
+      {'title': '负数', 'value': 'negative'},
+      {'title': '是否为0', 'value': 'zero'},
+    ],
+    'checkbox': [],
+    'file': [],
+    null: []
+  },
+  cditDefault: {
+    'text': {
+      'length': {
+        'gt': 0,
+        'lt': 0,
+        'bt': [0, 1],
+        'eq': 0
       },
-      'special':{
-        'include':'',
-        'notinclude':''
+      'special': {
+        'include': '',
+        'notinclude': ''
       },
-      'regular':'',
+      'regular': '',
     },
   },
   //分页使用的变量
