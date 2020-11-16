@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4fe755bd-f89f-4666-bf3b-c960c81b8fcf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiAutoTest/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ApiAutoTest/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +183,7 @@
       <workItem from="1605097395716" duration="1438000" />
       <workItem from="1605151498084" duration="6624000" />
       <workItem from="1605164110466" duration="18883000" />
+      <workItem from="1605492110380" duration="4039000" />
     </task>
     <task id="LOCAL-00001" summary="Json编辑器">
       <created>1596893940121</created>
