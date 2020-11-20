@@ -2,9 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fe755bd-f89f-4666-bf3b-c960c81b8fcf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/singleapi/views/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/singleapi/views/dictviews.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiAutoTest/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ApiAutoTest/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0002_auto_20201105_1023.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/views/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/common/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/common/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/api/Apiform.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/api/Apiform.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +80,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\AutoTest\ApiAutoTest\backend\singleapi\views" />
       <recent name="E:\python\ApiAutoTest\backend\singleapi" />
       <recent name="E:\python\ApiAutoTest\backend\singleapi\test_run_requests" />
       <recent name="E:\python\ApiAutoTest\backend\singleapi\views" />
@@ -183,7 +198,7 @@
       <workItem from="1605097395716" duration="1438000" />
       <workItem from="1605151498084" duration="6624000" />
       <workItem from="1605164110466" duration="18883000" />
-      <workItem from="1605492110380" duration="4039000" />
+      <workItem from="1605492110380" duration="114462000" />
     </task>
     <task id="LOCAL-00001" summary="Json编辑器">
       <created>1596893940121</created>
@@ -318,7 +333,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605429151702</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="change ip">
+      <created>1605496175167</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1605496175167</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,18 +364,19 @@
     <MESSAGE value="upload build" />
     <MESSAGE value="add ignore workspace.xml" />
     <MESSAGE value="change ParamsTable.vue" />
-    <option name="LAST_COMMIT_MESSAGE" value="change ParamsTable.vue" />
+    <MESSAGE value="change ip" />
+    <option name="LAST_COMMIT_MESSAGE" value="change ip" />
   </component>
   <component name="WindowStateProjectService">
     <state x="275" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1598174025146">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1598174025146" />
-    <state x="344" y="0" key="CommitChangelistDialog2" timestamp="1605436011012">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="596" y="86" key="CommitChangelistDialog2" timestamp="1605496173554">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="344" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1605436011012" />
-    <state x="596" y="86" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605153155633" />
+    <state x="596" y="86" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605496173554" />
     <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1604584803692">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -427,20 +450,21 @@
     </state>
     <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1603976286329" />
     <state x="259" y="0" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605152338939" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1605429153101">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2" timestamp="1605496178448">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1605429153101" />
-    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605153159455" />
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605496178448" />
     <state x="510" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1605164288539">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="363" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1605097459703" />
     <state x="510" y="266" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605164288539" />
-    <state x="683" y="0" width="683" height="728" maximized="true" key="dock-window-1" timestamp="1604326101839">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="-7" y="0" width="974" height="1047" key="dock-window-1" timestamp="1605767218521">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="683" y="0" width="683" height="728" maximized="true" key="dock-window-1/0.0.1366.728@0.0.1366.728" timestamp="1604326101839" />
+    <state x="-7" y="0" width="974" height="1047" key="dock-window-1/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605767218521" />
     <state x="362" y="154" key="git4idea.merge.GitPullDialog" timestamp="1605334117389">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

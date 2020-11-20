@@ -45,17 +45,21 @@
       <div class="separate">请求参数</div>
       <el-tabs v-model="activeName" style="padding-bottom: 30px">
         <el-tab-pane label="Params" name="first">
-          <params-table v-model="apiform.params" :is-show-del="true" :disabled="isView"></params-table>
+          <params-table v-model="apiform.params" :column-type="columntype" :optiontype="optiontype"
+                        :options="options"  :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
         <el-tab-pane label="Body" name="second">
           <!--          <json-viewer v-if="isView" v-model="apiform.base_body" :expand-depth=5 copyable boxed sort></json-viewer>-->
-          <params-table v-model="apiform.base_body" :is-show-del="true" :disabled="isView"></params-table>
+          <params-table v-model="apiform.base_body" :column-type="columntype" :optiontype="optiontype"
+                        :options="options"  :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
         <el-tab-pane label="Headers" name="third">
-          <params-table v-model="apiform.base_head" :is-show-del="true" :disabled="isView"></params-table>
+          <params-table v-model="apiform.base_head" :column-type="columntype" :optiontype="optiontype"
+                        :options="options"  :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
         <el-tab-pane label="Cookies" name="fourth">
-          <params-table v-model="apiform.cookies" :is-show-del="true" :disabled="isView"></params-table>
+          <params-table v-model="apiform.cookies" :column-type="columntype"  :optiontype="optiontype"
+                        :options="options" :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
       </el-tabs>
       <el-button type="primary" @click="outMsg" plain v-if="isNew||isEdit">
@@ -64,8 +68,9 @@
       </el-button>
       <div class="separate">期望返回值</div>
       <!--      <json-viewer v-if="isView" v-model="apiform.base_expect" :expand-depth=5 copyable boxed sort></json-viewer>-->
-<!--      <json-code v-model="apiform.base_expect" :is-show-form="true"></json-code>-->
-      <params-table  v-model="apiform.base_expect" :is-show-del="true"></params-table>
+      <!--      <json-code v-model="apiform.base_expect" :is-show-form="true"></json-code>-->
+      <params-table v-model="apiform.base_expect" :column-type="columntype" :optiontype="optiontype"
+                    :options="options" :is-show-del="true"></params-table>
       <el-form-item style="padding-top: 20px" v-if="isNew||isEdit">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="goBackPage">取消</el-button>
@@ -115,6 +120,9 @@
         isView: false,
         isEdit: false,
         isNew: true,
+        columntype:[],
+        optiontype:[],
+        options:[],
       }
     },
     mounted() {
@@ -123,7 +131,10 @@
       this.isNew = this.$route.name === 'newapi';
       if (this.isEdit || this.isView) {
         this.setApiForm(this.$route.query.apiId);
-      }
+      };
+      this.getColumnType();
+      this.getOptionType();
+      this.getOptions();
     },
 
     methods: {
@@ -218,8 +229,8 @@
               that.apiform.base_head = JSON.parse(that.apiform.base_head ? that.apiform.base_head : []);
               that.apiform.cookies = JSON.parse(that.apiform.cookies ? that.apiform.cookies : []);
               //查看的时候，需要将字符串转为json，才能在插件中高亮跟折叠
-              that.apiform.base_body = JSON.parse(that.apiform.base_body?that.apiform.base_body:[]);
-              that.apiform.base_expect = JSON.parse(that.apiform.base_expect?that.apiform.base_expect:[]);
+              that.apiform.base_body = JSON.parse(that.apiform.base_body ? that.apiform.base_body : []);
+              that.apiform.base_expect = JSON.parse(that.apiform.base_expect ? that.apiform.base_expect : []);
               if (that.isEdit) {
                 // 编辑的时候自动新增一行空数据
                 that.apiform.params.push(JSON.parse(JSON.stringify(common.formDataNull)));
@@ -244,9 +255,66 @@
           console.log(err.toString())
         })
       },
-      outMsg:function () {
-          console.log(this.apiform.base_expect)
-      }
+      outMsg: function () {
+        console.log(this.apiform.base_expect)
+      },
+      getColumnType() {
+        let that = this;
+        that.$axios
+          .get(common.baseUrl + common.columntypelist)
+          .then(function (res) {
+            if (res.data.status === 1) {
+              that.columntype = res.data.data;
+            } else {
+              that.$message({
+                message: res.data.msg,
+                type: 'error',
+                showClose: true
+              });
+            }
+          })
+          .catch(function (err) {
+            that.$message.error(err.toString());
+          })
+      },
+      getOptionType() {
+        let that = this;
+        that.$axios
+          .get(common.baseUrl + common.optiontypelist)
+          .then(function (res) {
+            if (res.data.status === 1) {
+              that.optiontype = res.data.data;
+            } else {
+              that.$message({
+                message: res.data.msg,
+                type: 'error',
+                showClose: true
+              });
+            }
+          })
+          .catch(function (err) {
+            that.$message.error(err.toString());
+          })
+      },
+      getOptions() {
+        let that = this;
+        that.$axios
+          .get(common.baseUrl + common.optionlist)
+          .then(function (res) {
+            if (res.data.status === 1) {
+              that.options = res.data.data;
+            } else {
+              that.$message({
+                message: res.data.msg,
+                type: 'error',
+                showClose: true
+              });
+            }
+          })
+          .catch(function (err) {
+            that.$message.error(err.toString());
+          })
+      },
     },
   }
 </script>

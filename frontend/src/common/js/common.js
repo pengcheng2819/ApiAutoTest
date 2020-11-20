@@ -1,6 +1,12 @@
+
+
+
+
 export default {
+
+
   //前端使用的全局变量
-  baseUrl: 'http://192.168.0.108:8000/',      //后端地址及端口   //gitignore
+  baseUrl: 'http://192.168.156.124:8000/',      //后端地址及端口   //gitignore
   //API
   apilist: 'api/list/',
   queryapilist: 'api/queryapilist/',
@@ -17,6 +23,11 @@ export default {
   detailapicase: '/casedetail/',
   runcase: 'api/runcase/',
   testruncase: 'api/testruncase/',
+  //DICT
+  columntypelist: 'api/columntypelist/',
+  optiontypelist: 'api/optiontypelist/',
+  optionlist: 'api/optionlist/',
+
 
   requestMethod: ['GET', 'POST', 'PUT'],         //请求方法
   status: [{'title': '开发中', 'value': 1},
@@ -40,7 +51,7 @@ export default {
   formDataNull: {
     paramname: '',
     notnull: '',
-    type: 'text',
+    type: 1,
     condition: [],
     conditionValue: {},
     memo: ''
@@ -48,9 +59,20 @@ export default {
 
   condioptions: {
     'text': [
-      {'title': '字符长度', 'value': 'length'},
-      {'title': '特殊字符', 'value': 'special'},
-      {'title': '正则', 'value': 'regular'},
+      {'title': '字符长度',
+        'value': [
+          {'title':'大于等于','value':'gt'},
+          {'title':'小于等于','value':'lt'},
+          {'title':'介于','value':'bt'},
+          {'title':'等于','value':'eq'},
+        ]
+      },
+      {'title': '特殊字符',
+        'value': 'special'
+      },
+      {'title': '正则',
+        'value': 'regular'
+      },
     ],
     'int': [
       {'title': '数值范围', 'value': 'length'},
@@ -63,12 +85,7 @@ export default {
   },
   cditDefault: {
     'text': {
-      'length': {
-        'gt': 0,
-        'lt': 0,
-        'bt': [0, 1],
-        'eq': 0
-      },
+      'length':{},
       'special': {
         'include': '',
         'notinclude': ''
@@ -84,6 +101,7 @@ export default {
   need_del_null(list) {
     return list[list.length - 1].paramname === "";
   },
+
   formatDateTime(time) {
     let datetime = time;
     if (datetime) {

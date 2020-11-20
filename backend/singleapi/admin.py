@@ -1,10 +1,18 @@
 from django.contrib import admin
-from backend.singleapi.models import Api,ApiCase,Option
+from backend.singleapi.models import Api,ApiCase,OptionDict,ColumnTypeDict,OptionTypeDict
 
 
-@admin.register(Option)
-class OptionAdmin(admin.ModelAdmin):
-    list_display = ('id','title','value','type','status')
+@admin.register(OptionDict)
+class OptionDictAdmin(admin.ModelAdmin):
+    list_display = ('id','option_type','title','widget','status')
+
+@admin.register(ColumnTypeDict)
+class ColumnTypeDictAdmin(admin.ModelAdmin):
+    list_display = ('id','title','value','status')
+
+@admin.register(OptionTypeDict)
+class OptionTypeDictAdmin(admin.ModelAdmin):
+    list_display = ('id','column_type','title','value','status')
 
 @admin.register(Api)
 class ApiAdmin(admin.ModelAdmin):

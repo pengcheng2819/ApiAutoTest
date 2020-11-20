@@ -1,7 +1,7 @@
 # 作者      : pengcheng
 # 创建时间  : 2020/7/21 15:11 
 
-from backend.singleapi.models import Api, ApiCase
+from backend.singleapi.models import Api, ApiCase, OptionDict, ColumnTypeDict, OptionTypeDict
 from rest_framework import serializers
 
 
@@ -17,3 +17,21 @@ class ApiCaseSerializer(serializers.ModelSerializer):
         model = ApiCase
         fields = ['id', 'api', 'path', 'request_method', 'memo', 'params', 'cookies', 'case_name', 'head', 'body',
                   'expect', 'create_time', 'update_time', 'status']
+
+
+class OptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OptionDict
+        fields = ['id','option_type','title','widget','status']
+
+
+class ColumnTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ColumnTypeDict
+        fields = ['id','title','value','status']
+
+
+class OptionTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OptionTypeDict
+        fields = ['id','column_type','title','value','status']

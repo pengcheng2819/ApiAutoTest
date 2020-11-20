@@ -3,7 +3,7 @@
 
 from django.urls import path, include
 
-from backend.singleapi import views
+from backend.singleapi.views import views, dictviews
 
 urlpatterns = [
     path('list/', views.ApiList.as_view(), name='apilist'),
@@ -20,6 +20,10 @@ urlpatterns = [
     path('delapicase/', views.ApiCaseDelete.as_view(), name='delapicase'),
     path('<int:pk>/casedetail/', views.ApiCaseDetail.as_view(), name='editcase'),
     path('testruncase/', views.TestRunCase.as_view(), name='runcase'),
+
+    path('columntypelist/', dictviews.ColumnTypeList.as_view(), name='columntypelist'),
+    path('optiontypelist/', dictviews.OptionTypeList.as_view(), name='optiontypelist'),
+    path('optionlist/', dictviews.OptionList.as_view(), name='optionlist'),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

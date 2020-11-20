@@ -1,12 +1,8 @@
-from datetime import datetime
 
-import django
 from django.db import models
 
 
-
 class Api(models.Model):
-
 
     api_name = models.CharField(max_length=50)
     path = models.CharField(max_length=500)
@@ -23,13 +19,11 @@ class Api(models.Model):
     update_time = models.DateTimeField(auto_now=True)
     status = models.IntegerField(default=1)
 
-
     class Meta:
         ordering = ['-pk']
 
     def __str__(self):
         return self.api_name
-
 
 
 class ApiCase(models.Model):
@@ -54,16 +48,24 @@ class ApiCase(models.Model):
         return self.case_name
 
 
-class Option(models.Model):
-    type_choice = (
-        ('tt','method'),
-        ('字段值类型','valuetype'),
-        ('待测条件','condioptions'),
-        ('发送数据类型', 'posttype'),
-    )
+class ColumnTypeDict(models.Model):
+    # 字段类型字典表
     title = models.CharField(max_length=100)
     value = models.CharField(max_length=100)
-    type = models.CharField(choices=type_choice,max_length=20)
+    status = models.IntegerField(default=1)
+
+    class Meta:
+        ordering = ['pk']
+
+    def __str__(self):
+        return self.title
+
+
+class OptionTypeDict(models.Model):
+    # 测试点选项类型字典表
+    column_type = models.ForeignKey(ColumnTypeDict,on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    value = models.CharField(max_length=100)
     status = models.IntegerField(default=1)
 
     class Meta:
@@ -72,8 +74,24 @@ class Option(models.Model):
     def __str__(self):
         return self.title
 
-class Logic(models.Model):
-    api = models.ForeignKey(Api,on_delete=models.CASCADE)
 
+class OptionDict(models.Model):
+    # 测试点选项字典表
+    widget_choice =(
+        ('checkbox','复选框'),
+        ('input','输入框'),
+        ('select','下拉框'),
+        ('doubleinput','区间输入框'),
+        ('null','无需控件')
+    )
+    option_type = models.ForeignKey(OptionTypeDict,on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    widget = models.CharField(max_length=100,choices=widget_choice,default=('输入框','input'))
+    status = models.IntegerField(default=1)
 
+    class Meta:
+        ordering = ['-pk']
+
+    def __str__(self):
+        return self.title
 

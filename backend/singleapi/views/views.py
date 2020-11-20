@@ -14,7 +14,7 @@ import requests
 
 # Api
 
-class ApiList(generics.ListAPIView):
+class ApiList(APIView):
     def get(self, request):
         try:
             apilist = Api.objects.filter(~Q(status=0))
