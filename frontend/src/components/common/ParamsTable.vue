@@ -6,11 +6,11 @@
           <el-form label-width="100px" align="left" :disabled="disabled">
 
             <el-form-item v-for="(item,index) in value[prop.$index].condition" :key="index"
-                          :label="getOptionTypeById(item)[0].title">
+                          :label="getOptionTypes(item)[0].title">
               <el-row>
                 <el-col :span="5">
-                  <el-select v-model="value[prop.$index].conditionValue[index]">
-                    <el-option v-for="item in getOptionByTypeId(item)"
+                  <el-select v-model="value[prop.$index].condition[item]">
+                    <el-option v-for="item in getOptions(item)"
                                :key="item.id"
                                :label="item.title"
                                :value="item.id"></el-option>
@@ -61,7 +61,7 @@
               v-for="item in getOpTyByColTy(value[prop.$index].type)"
               :key="item.id"
               :label="item.title"
-              :value="item.id">
+              :value="item.value">
             </el-option>
           </el-select>
 
@@ -123,8 +123,8 @@
         this.value[index].condioptions = {};
       },
 
-      getOptionTypeById(id) {
-        return this.optiontype.filter(item => item.id == id);
+      getOptionTypes(value) {
+        return this.optiontype.filter(item => item.value == value);
       },
 
       //根据值类型过滤测试点
@@ -132,8 +132,15 @@
         return this.optiontype.filter(item => item.column_type == columnId);
       },
 
-      getOptionByTypeId(typeId) {
-        return this.options.filter(item => item.option_type == typeId);
+      getOptions(type) {
+        return this.options.filter(item => item.option_type == this.getOptionTypeId(type));
+      },
+
+      getOptionTypeId(type){
+        for (let item in this.optiontype){
+          if (item.value == type)
+            return item.id;
+        }
       },
 
       getWidget(optionId) {
