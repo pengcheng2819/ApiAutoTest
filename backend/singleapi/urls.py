@@ -1,9 +1,9 @@
 # 作者      : pengcheng
-# 创建时间  : 2020/7/1 18:24 
+# 创建时间  : 2020/7/1 18:24
 
 from django.urls import path, include
 
-from backend.singleapi.views import views, dictviews
+from backend.singleapi.views import views, dictviews,caseviews
 
 urlpatterns = [
     path('list/', views.ApiList.as_view(), name='apilist'),
@@ -24,6 +24,8 @@ urlpatterns = [
     path('columntypelist/', dictviews.ColumnTypeList.as_view(), name='columntypelist'),
     path('optiontypelist/', dictviews.OptionTypeList.as_view(), name='optiontypelist'),
     path('optionlist/', dictviews.OptionList.as_view(), name='optionlist'),
+
+    path('createcase/', caseviews.CreateCase.as_view(), name='createcase'),
 
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 

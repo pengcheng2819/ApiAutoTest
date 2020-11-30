@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import socket
 
-ip = socket.gethostbyname(socket.getfqdn(socket.gethostname()))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +27,7 @@ SECRET_KEY = 'ei8gxuaol5cbgy%f^+1=zqe0p$p-n8+_4lc=&p5qvi21i9(dxg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ip]
+ALLOWED_HOSTS = ['192.168.156.124']
 
 
 # Application definition
@@ -141,6 +140,6 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/dist/static')]
 # 添加访问白名单
-CORS_ORIGIN_WHITELIST = ['http://'+ip+':8080']
+CORS_ORIGIN_WHITELIST = ['http://192.168.156.124:8080']
 # cors cookies
 CORS_ALLOW_CREDENTIALS = True

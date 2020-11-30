@@ -2,8 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fe755bd-f89f-4666-bf3b-c960c81b8fcf" name="Default Changelist" comment="change ignore add db.sqlite3&#10;add option dict &#10;change ParamsTable.vue option get value">
+      <change afterPath="$PROJECT_DIR$/backend/singleapi/views/caseviews.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/singleapi/views/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/singleapi/views/xegerto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiAutoTest/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/ApiAutoTest/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiAutoTest/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ApiAutoTest/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0002_auto_20201119_1707.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0003_auto_20201120_1619.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0004_auto_20201120_1622.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/migrations/0005_auto_20201120_1627.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/singleapi/views/dictviews.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/views/dictviews.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/common/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/common/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/api/ApiList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/api/ApiList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/api/Apiform.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/api/Apiform.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/common/ParamsTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +71,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ApiAutoTest1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv/Lib/site-packages" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -73,8 +91,49 @@
       <recent name="E:\python\ApiAutoTest\frontend\src\common\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Django server.ApiAutoTest">
-    <configuration name="JsonCode.vue" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/ApiAutoTest/frontend/src/components/JsonCode.vue" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="Python.test">
+    <configuration name="caseviews" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ApiAutoTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend/singleapi/views" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/singleapi/views/caseviews.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ApiAutoTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend/singleapi/views" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/singleapi/views/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
     <configuration name="test_request" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -121,6 +180,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="xegerto" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ApiAutoTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend/singleapi/views" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/backend/singleapi/views/xegerto.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="ApiAutoTest" type="Python.DjangoServer" factoryName="Django server">
       <module name="ApiAutoTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,9 +227,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.caseviews" />
+        <item itemvalue="Python.xegerto" />
         <item itemvalue="Python.test_request" />
         <item itemvalue="Python.test_run_case" />
-        <item itemvalue="JavaScript Debug.JsonCode.vue" />
       </list>
     </recent_temporary>
   </component>
@@ -185,6 +268,9 @@
       <workItem from="1605151498084" duration="6624000" />
       <workItem from="1605164110466" duration="18883000" />
       <workItem from="1605492110380" duration="118036000" />
+      <workItem from="1606095862861" duration="2948000" />
+      <workItem from="1606099002715" duration="11784000" />
+      <workItem from="1606116915487" duration="135262000" />
     </task>
     <task id="LOCAL-00001" summary="Json编辑器">
       <created>1596893940121</created>
@@ -366,31 +452,40 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1598174025146" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606117727297">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606117727297" />
     <state x="596" y="86" key="CommitChangelistDialog2" timestamp="1605868125731">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="344" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1605436011012" />
     <state x="596" y="86" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605868125731" />
-    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1604584803692">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="651" y="169" key="FileChooserDialogImpl" timestamp="1606465664882">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1604584803692" />
-    <state width="1322" height="216" key="GridCell.Tab.0.bottom" timestamp="1599150045636">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="651" y="169" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606465664882" />
+    <state width="1877" height="200" key="GridCell.Tab.0.bottom" timestamp="1606729560898">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1322" height="216" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
-    <state width="1322" height="216" key="GridCell.Tab.0.center" timestamp="1599150045636">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="200" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606729560898" />
+    <state width="1877" height="200" key="GridCell.Tab.0.center" timestamp="1606729560898">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1322" height="216" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
-    <state width="1322" height="216" key="GridCell.Tab.0.left" timestamp="1599150045636">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="200" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606729560898" />
+    <state width="1877" height="200" key="GridCell.Tab.0.left" timestamp="1606729560898">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1322" height="216" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
-    <state width="1322" height="216" key="GridCell.Tab.0.right" timestamp="1599150045636">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="200" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606729560898" />
+    <state width="1877" height="200" key="GridCell.Tab.0.right" timestamp="1606729560898">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1322" height="216" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
+    <state width="1877" height="200" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606729560898" />
     <state width="1322" height="216" key="GridCell.Tab.1.bottom" timestamp="1599150045637">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -439,21 +534,21 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="451" y="85" key="RollbackChangesDialog/0.0.1366.728@0.0.1366.728" timestamp="1604582620351" />
-    <state x="259" y="0" key="SettingsEditor" timestamp="1605152338939">
+    <state x="259" y="0" key="SettingsEditor" timestamp="1606465690400">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1603976286329" />
-    <state x="259" y="0" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605152338939" />
-    <state x="387" y="137" key="Vcs.Push.Dialog.v2" timestamp="1605864390288">
+    <state x="259" y="0" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606465690400" />
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2" timestamp="1605868131581">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1605429153101" />
-    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605864390288" />
-    <state x="510" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1605164288539">
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605868131581" />
+    <state x="510" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1606116950834">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="363" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1605097459703" />
-    <state x="510" y="266" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1605164288539" />
+    <state x="510" y="266" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606116950834" />
     <state x="-7" y="0" width="974" height="1047" key="dock-window-1" timestamp="1605767218521">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -471,5 +566,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1603976066018" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ApiAutoTest$caseviews.coverage" NAME="caseviews Coverage Results" MODIFIED="1606715201913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend/singleapi/views" />
+    <SUITE FILE_PATH="coverage/ApiAutoTest$test.coverage" NAME="test Coverage Results" MODIFIED="1606729342878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend/singleapi/views" />
+    <SUITE FILE_PATH="coverage/ApiAutoTest$xegerto.coverage" NAME="xegerto Coverage Results" MODIFIED="1606291014847" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend/singleapi/views" />
   </component>
 </project>

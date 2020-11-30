@@ -46,20 +46,20 @@
       <el-tabs v-model="activeName" style="padding-bottom: 30px">
         <el-tab-pane label="Params" name="first">
           <params-table v-model="apiform.params" :column-type="columntype" :optiontype="optiontype"
-                        :options="options"  :is-show-del="true" :disabled="isView"></params-table>
+                        :options="options" :is-show-del="true" :disabled="isView"></params-table>
         </el-tab-pane>
         <el-tab-pane label="Body" name="second">
           <!--          <json-viewer v-if="isView" v-model="apiform.base_body" :expand-depth=5 copyable boxed sort></json-viewer>-->
           <params-table v-model="apiform.base_body" :column-type="columntype" :optiontype="optiontype"
-                        :options="options"  :is-show-del="true" :disabled="isView"></params-table>
-        </el-tab-pane>
-        <el-tab-pane label="Headers" name="third">
-          <params-table v-model="apiform.base_head" :column-type="columntype" :optiontype="optiontype"
-                        :options="options"  :is-show-del="true" :disabled="isView"></params-table>
-        </el-tab-pane>
-        <el-tab-pane label="Cookies" name="fourth">
-          <params-table v-model="apiform.cookies" :column-type="columntype"  :optiontype="optiontype"
                         :options="options" :is-show-del="true" :disabled="isView"></params-table>
+        </el-tab-pane>
+        <el-tab-pane label="Base_Headers" name="third">
+          <json-viewer v-if="isView" v-model="apiform.base_head" :expand-depth=5 copyable boxed sort></json-viewer>
+          <json-code v-if="isEdit||isNew" v-model="apiform.base_head" :is-show-form="false"></json-code>
+        </el-tab-pane>
+        <el-tab-pane label="Base_Cookies" name="fourth">
+          <json-viewer v-if="isView" v-model="apiform.cookies" :expand-depth=5 copyable boxed sort></json-viewer>
+          <json-code v-if="isEdit||isNew" v-model="apiform.cookies" :is-show-form="false"></json-code>
         </el-tab-pane>
       </el-tabs>
       <el-button type="primary" @click="outMsg" plain v-if="isNew||isEdit">
@@ -102,8 +102,8 @@
           memo: '',
           request_method: 'GET',
           params: [JSON.parse(JSON.stringify(common.formDataNull))],
-          cookies: [JSON.parse(JSON.stringify(common.formDataNull))],
-          base_head: [JSON.parse(JSON.stringify(common.formDataNull))],
+          cookies: '{}',
+          base_head: '{}',
           base_body: [JSON.parse(JSON.stringify(common.formDataNull))],
           base_expect: [JSON.parse(JSON.stringify(common.formDataNull))],
           owner: '',
@@ -120,9 +120,9 @@
         isView: false,
         isEdit: false,
         isNew: true,
-        columntype:[],
-        optiontype:[],
-        options:[],
+        columntype: [],
+        optiontype: [],
+        options: [],
       }
     },
     mounted() {
@@ -131,7 +131,8 @@
       this.isNew = this.$route.name === 'newapi';
       if (this.isEdit || this.isView) {
         this.setApiForm(this.$route.query.apiId);
-      };
+      }
+      ;
       this.getColumnType();
       this.getOptionType();
       this.getOptions();
@@ -142,17 +143,11 @@
         let that = this;
         let url = common.baseUrl + common.newapi;
         let bodydata = JSON.parse(JSON.stringify(that.apiform));
-        let paramList = [bodydata.params, bodydata.cookies, bodydata.base_head, bodydata.base_body, bodydata.base_expect]
+        let paramList = [bodydata.params, bodydata.base_body, bodydata.base_expect];
         //提交时需要去掉最后一行空的
 
         if (common.need_del_null(bodydata.params)) {
           bodydata.params.pop();
-        }
-        if (common.need_del_null(bodydata.cookies)) {
-          bodydata.cookies.pop();
-        }
-        if (common.need_del_null(bodydata.base_head)) {
-          bodydata.base_head.pop();
         }
         if (common.need_del_null(bodydata.base_expect)) {
           bodydata.base_expect.pop();
@@ -161,8 +156,6 @@
           bodydata.base_body.pop();
         }
         bodydata.params = JSON.stringify(bodydata.params);
-        bodydata.cookies = JSON.stringify(bodydata.cookies);
-        bodydata.base_head = JSON.stringify(bodydata.base_head);
         bodydata.base_expect = JSON.stringify(bodydata.base_expect);
         bodydata.base_body = JSON.stringify(bodydata.base_body);
         if (that.isEdit) {
@@ -226,16 +219,16 @@
               that.apiform = res.data.data;
               //需要将表格数据的字符串转为对象
               that.apiform.params = JSON.parse(that.apiform.params ? that.apiform.params : []);
-              that.apiform.base_head = JSON.parse(that.apiform.base_head ? that.apiform.base_head : []);
-              that.apiform.cookies = JSON.parse(that.apiform.cookies ? that.apiform.cookies : []);
+              that.apiform.base_head = JSON.parse(that.apiform.base_head ? that.apiform.base_head : {});
+              that.apiform.cookies = JSON.parse(that.apiform.cookies ? that.apiform.cookies : {});
               //查看的时候，需要将字符串转为json，才能在插件中高亮跟折叠
               that.apiform.base_body = JSON.parse(that.apiform.base_body ? that.apiform.base_body : []);
               that.apiform.base_expect = JSON.parse(that.apiform.base_expect ? that.apiform.base_expect : []);
               if (that.isEdit) {
                 // 编辑的时候自动新增一行空数据
+                that.apiform.base_head = that.apiform.base_head ? JSON.stringify(that.apiform.base_head) : '{}';
+                that.apiform.cookies = that.apiform.cookies ? JSON.stringify(that.apiform.cookies) : '{}';
                 that.apiform.params.push(JSON.parse(JSON.stringify(common.formDataNull)));
-                that.apiform.base_head.push(JSON.parse(JSON.stringify(common.formDataNull)));
-                that.apiform.cookies.push(JSON.parse(JSON.stringify(common.formDataNull)));
                 that.apiform.base_body.push(JSON.parse(JSON.stringify(common.formDataNull)));
                 that.apiform.base_expect.push(JSON.parse(JSON.stringify(common.formDataNull)));
               }

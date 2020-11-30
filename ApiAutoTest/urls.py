@@ -21,4 +21,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='templates/../frontend/dist/index.html')),
     path('api/', include('backend.singleapi.urls')),
     path('admin/', admin.site.urls),
+
 ]

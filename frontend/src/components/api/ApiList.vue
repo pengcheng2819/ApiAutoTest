@@ -48,6 +48,9 @@
                 <span type="primary" @click="editApiRouter(scope.row.id)">编辑接口</span>
               </el-dropdown-item>
               <el-dropdown-item>
+                <span type="primary" @click="createCase(scope.row.id)">生成case</span>
+              </el-dropdown-item>
+              <el-dropdown-item>
                 <span @click="deleteApi([scope.row.id])">删除接口</span>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -184,6 +187,46 @@
           query: {apiId: apiId}
         })
       },
+      createCase: function (id) {
+        this.$confirm('您确定需要为I为【' + id.toString() + '】的接口自动生成case吗?如果已经生成过，则会删除旧的重新生成', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            let that = this;
+            that.$axios
+              .post(common.baseUrl + common.createcase, {
+                id: id
+              })
+              .then(res => {
+                if (res.data.status === 1) {
+                  that.getApiList();
+                  this.$message({
+                    type: 'success',
+                    message: '生成成功!'
+                  });
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '生成失败' + res.data.msg
+                  });
+                }
+              })
+              .catch(err => {
+                this.$message({
+                  type: 'error',
+                  message: '生成失败' + err.toString()
+                });
+              });
+
+          }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消生成'
+          });
+        });
+      },
       deleteApi: function (ids) {
         this.$confirm('您确定需要删除ID为【' + ids.toString() + '】的接口吗?', '提示', {
           confirmButtonText: '确定',
@@ -224,6 +267,7 @@
           });
         });
       },
+
       statusFormat: function (row, column) {
         for (var index in common.status) {
           if (row.status === common.status[index].value)

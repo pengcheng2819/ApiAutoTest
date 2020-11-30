@@ -1,7 +1,3 @@
-
-
-
-
 export default {
 
 
@@ -14,6 +10,8 @@ export default {
   editapi: 'api/updateapi/',
   deleteapi: 'api/delapi/',
   detailapi: '/apidetail/',
+  createcase: 'api/createcase/',
+
   //APICASE
   apicaselist: 'api/caselist/',
   querycaselist: 'api/querycaselist/',
@@ -41,17 +39,17 @@ export default {
 
   //formtable相关数据
   valueType: [
-    {'title': '字符串', 'value': 'text'},
+    {'title': '字符串', 'value': 'string'},
     {'title': '数值', 'value': 'number'},
     {'title': '整数', 'value': 'int'},
-    {'title': '布尔值', 'value': 'checkbox'},
+    {'title': '布尔值', 'value': 'boolean'},
     {'title': '文件', 'value': 'file'},
     {'title': 'null', 'value': null},
   ],
   formDataNull: {
     paramname: '',
     notnull: '',
-    type: 1,
+    type: 'string',
     condition: [],
     conditionValue: {},
     memo: ''
@@ -59,18 +57,21 @@ export default {
 
   condioptions: {
     'text': [
-      {'title': '字符长度',
+      {
+        'title': '字符长度',
         'value': [
-          {'title':'大于等于','value':'gt'},
-          {'title':'小于等于','value':'lt'},
-          {'title':'介于','value':'bt'},
-          {'title':'等于','value':'eq'},
+          {'title': '大于等于', 'value': 'gt'},
+          {'title': '小于等于', 'value': 'lt'},
+          {'title': '介于', 'value': 'bt'},
+          {'title': '等于', 'value': 'eq'},
         ]
       },
-      {'title': '特殊字符',
+      {
+        'title': '特殊字符',
         'value': 'special'
       },
-      {'title': '正则',
+      {
+        'title': '正则',
         'value': 'regular'
       },
     ],
@@ -85,7 +86,7 @@ export default {
   },
   cditDefault: {
     'text': {
-      'length':{},
+      'length': {},
       'special': {
         'include': '',
         'notinclude': ''

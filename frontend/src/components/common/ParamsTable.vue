@@ -8,28 +8,63 @@
             <el-form-item v-for="(item,index) in value[prop.$index].condition" :key="index"
                           :label="getOptionTypes(item)[0].title">
               <el-row>
-                <el-col :span="5">
-                  <el-select v-model="value[prop.$index].condition[item]">
+                <el-col :span="6">
+                  <el-select filterable v-model="value[prop.$index].conditionValue[item]">
                     <el-option v-for="item in getOptions(item)"
-                               :key="item.id"
+                               :key="item.value"
                                :label="item.title"
-                               :value="item.id"></el-option>
+                               :value="getObj(item)"></el-option>
                   </el-select>
                 </el-col>
-
-                <el-button>{{getWidget(value[prop.$index].conditionValue[item]).widget}}</el-button>
-
+                <el-col :span="6" style="padding-left: 20px"
+                        v-if="isShow(value[prop.$index].conditionValue[item],'input')">
+                  <el-input v-model="value[prop.$index].conditionValue[item].input[0]"></el-input>
+                </el-col>
                 <el-col :span="12" style="padding-left: 20px"
-                        v-if="getWidget(value[prop.$index].conditionValue[item]).widget==='input'">
-                  <el-input v-model="value[prop.$index].conditionValue[item]"></el-input>
+                        v-if="isShow(value[prop.$index].conditionValue[item],'input-input')">
+                  <el-row>
+                    <el-col :span="6">
+                      <el-input v-model="value[prop.$index].conditionValue[item].input[0]"></el-input>
+                    </el-col>
+                    <el-col :span="6" style="padding-left: 20px">
+                      <el-input v-model="value[prop.$index].conditionValue[item].input[1]"></el-input>
+                    </el-col>
+                  </el-row>
+                </el-col>
+                <el-col :span="6" style="padding-left: 20px"
+                        v-if="isShow(value[prop.$index].conditionValue[item],'select')">
+                  <el-select v-model="value[prop.$index].conditionValue[item].input[0]">
+                    <el-option v-for="item in optionInput[value[prop.$index].conditionValue[item].value]"
+                               :key="item.value"
+                               :label="item.title"
+                               :value="item.value"></el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="12" style="padding-left: 20px"
+                        v-if="isShow(value[prop.$index].conditionValue[item],'select-input')">
+                  <el-row>
+                    <el-col :span="6">
+                      <el-select v-model="value[prop.$index].conditionValue[item].input[0]">
+                        <el-option v-for="item in optionInput[value[prop.$index].conditionValue[item].value]"
+                                   :key="item.value"
+                                   :label="item.title"
+                                   :value="item.value"></el-option>
+                      </el-select>
+                    </el-col>
+                    <el-col :span="6" style="padding-left: 20px">
+                      <el-input v-model="value[prop.$index].conditionValue[item].input[1]"></el-input>
+                    </el-col>
+                  </el-row>
                 </el-col>
               </el-row>
-
             </el-form-item>
+
+
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" width="60">
+      <el-table-column type=" index
+                    " label="序号" width="60">
       </el-table-column>
       <el-table-column prop="paramname" label="参数名" width="220">
         <template slot-scope="prop">
@@ -44,24 +79,25 @@
       </el-table-column>
       <el-table-column prop="value" label="值类型" width="120">
         <template slot-scope="prop">
-          <el-select v-model="value[prop.$index].type" placeholder="值类型" @change="setNull(prop.$index)">
+          <el-select v-model="value[prop.$index].type" filterable placeholder="值类型" @change="setNull(prop.$index)">
             <el-option
               v-for="item in columnType"
-              :key="item.id"
+              :key="item.value"
               :label="item.title"
-              :value="item.id">
+              :value="item.value">
             </el-option>
           </el-select>
         </template>
       </el-table-column>
       <el-table-column prop="condition" label="测试点">
         <template slot-scope="prop">
-          <el-select v-model="value[prop.$index].condition" collapse-tags filterable multiple placeholder="测试点">
+          <el-select v-model="value[prop.$index].condition" collapse-tags filterable multiple placeholder="测试点"
+                     @change="setConditionValue(value[prop.$index])">
             <el-option
               v-for="item in getOpTyByColTy(value[prop.$index].type)"
-              :key="item.id"
+              :key="item.typekey"
               :label="item.title"
-              :value="item.value">
+              :value="item.typekey">
             </el-option>
           </el-select>
 
@@ -88,7 +124,7 @@
       </el-table-column>
 
     </el-table>
-    <el-button v-if="true" @click="outmsg">outmsg</el-button>
+    <el-button v-if="false" @click="outmsg">outmsg</el-button>
   </div>
 </template>
 
@@ -100,8 +136,26 @@
     props: ['value', 'columnType', 'optiontype', 'options', 'isShowDel', 'disabled'],
     data() {
       return {
-        condioptions: common.condioptions,
-
+        optionInput: {
+          'date': [
+            {
+              'title': '日期',
+              'value': 'date'
+            },
+            {
+              'title': '时间',
+              'value': 'time'
+            },
+            {
+              'title': '时间戳',
+              'value': 'timestamp'
+            },
+            {
+              'title': '日期时间',
+              'value': 'datetime'
+            },
+          ]
+        }
       }
     },
     methods: {
@@ -120,32 +174,55 @@
       //切换类型的时候，把当前值置空
       setNull(index) {
         this.value[index].condition = [];
-        this.value[index].condioptions = {};
       },
-
+      //根据值获取选项类型
       getOptionTypes(value) {
-        return this.optiontype.filter(item => item.value == value);
-      },
-
-      //根据值类型过滤测试点
-      getOpTyByColTy(columnId) {
-        return this.optiontype.filter(item => item.column_type == columnId);
-      },
-
-      getOptions(type) {
-        return this.options.filter(item => item.option_type == this.getOptionTypeId(type));
-      },
-
-      getOptionTypeId(type){
-        for (let item in this.optiontype){
-          if (item.value == type)
-            return item.id;
+        let item = this.optiontype.filter(item => item.typekey == value);
+        if (item[0]) {
+          return item;
+        } else {
+          return [{'title': '未知'}]
         }
       },
 
-      getWidget(optionId) {
-        return this.options.filter(item => item.id == optionId)
-      }
+      //根据值类型过滤测试点
+      getOpTyByColTy(type) {
+        return this.optiontype.filter(item => item.column_type == type);
+      },
+      //根据类型获取选项列表
+      getOptions(type) {
+        return this.options.filter(item => item.option_type == type);
+      },
+      //找到特定的选项
+      getOption(value) {
+        return this.options.filter(item => item.value == value)
+      },
+      //是否需要显示控件
+      isShow(item, str) {
+        if (item && this.getOption(item.value)[0]) {
+          let widget = this.getOption(item.value)[0];
+          return widget.widget == str;
+        } else
+          return false;
+      },
+      //给条件赋值对象
+      getObj(item) {
+        let itemc = {};
+        itemc.title = item.title;
+        itemc.value = item.value;
+        itemc.input = [];
+        return itemc
+      },
+
+      //取消选择测试点的时候，删除相应的选项
+      setConditionValue(item) {
+        for (var iv in item.conditionValue) {
+          if (item.condition.indexOf(iv) === -1) {
+            delete item.conditionValue[iv];
+          }
+        }
+      },
+
     },
 
   }
