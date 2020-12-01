@@ -4,74 +4,50 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.utils import json
+
 
 from backend.singleapi.serializers import ApiCaseSerializer, ApiSerializer
 from rest_framework.views import APIView
 from backend.singleapi.models import Api, ApiCase
 import requests
+from backend.singleapi.tools import try_result
 
 
 # Api
 
 class ApiList(APIView):
+    @try_result('获取接口列表')
     def get(self, request):
-        try:
-            apilist = Api.objects.filter(~Q(status=0))
-            serializer = ApiSerializer(apilist, many=True)
-            result = {
-                'msg': "获取接口列表成功！",
-                'data': serializer.data,
-                'status': 1
-            }
-
-            return Response(result, status=status.HTTP_200_OK)
-        except Exception as e:
-            result = {
-                'msg': "获取接口列表失败！" + str(e),
-                'status': 0
-            }
-            return Response(result)
+        api_list = Api.objects.filter(~Q(status=0))
+        serializer = ApiSerializer(api_list, many=True)
+        return serializer.data
 
 
 class QueryApiList(APIView):
+    @try_result('查询接口列表')
     def post(self, request):
-        try:
-            text = request.data['text']
-            method = request.data['method']
-            apilist = Api.objects.filter(~Q(status=0))
-            if (method):
-                apilist = apilist.filter(request_method=method)
-            if (text):
-                if (text.isdigit()):
-                    apilist = apilist.filter(id=int(text))
-                else:
-                    apilist = apilist.filter(
-                        Q(api_name__icontains=text) | Q(path__icontains=text) | Q(memo__icontains=text))
-            serializer = ApiSerializer(apilist, many=True)
-            result = {
-                'msg': "查询接口列表成功！",
-                'data': serializer.data,
-                'status': 1
-            }
-            return Response(result, status=status.HTTP_200_OK)
-        except Exception as e:
-            result = {
-                'msg': "查询接口列表失败！" + str(e),
-                'status': 0
-            }
-            return Response(result)
+        text = request.data['text']
+        method = request.data['method']
+        api_list = Api.objects.filter(~Q(status=0))
+        if method:
+            api_list = api_list.filter(request_method=method)
+        if text:
+            if text.isdigit():
+                api_list = api_list.filter(id=int(text))
+            else:
+                api_list = api_list.filter(
+                    Q(api_name__icontains=text) | Q(path__icontains=text) | Q(memo__icontains=text))
+        serializer = ApiSerializer(api_list, many=True)
+        return serializer.data
 
 
 class ApiDetail(APIView):
+    @try_result('接口详情查看')
     def get(self, request, pk):
         api = get_object_or_404(Api, pk=pk)
         if api and api.status:
             serializer = ApiSerializer(api)
-            result = {"msg": "id为【%d】的接口查询成功！" % pk, "status": 1, "data": serializer.data}
-            return Response(result)
-        result = {"msg": "id为【%d】的接口不存在或已删除！" % pk, "status": 0}
-        return Response(result)
+            return serializer.data
 
 
 class ApiAdd(generics.CreateAPIView):
@@ -80,101 +56,69 @@ class ApiAdd(generics.CreateAPIView):
 
 
 class ApiUpdate(APIView):
+    @try_result('接口更新')
     def post(self, request):
         api = get_object_or_404(Api, pk=request.data['id'])
         serializer = ApiSerializer(api, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return request.data['id']
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ApiDelete(APIView):
+    @try_result('接口删除')
     def post(self, request):
-        try:
-            apilist = Api.objects.filter(pk__in=request.data['id'])
-            apicaselist = ApiCase.objects.filter(api__in=apilist)
-            for api in apilist:
-                api.delete()
-                # api.status = 0
-                # api.save()
-                # 删除相关的case
-                delete_apicase(apicaselist)
-            result = {
-                'msg': "删除成功！",
-                'data': [{'接口名称': api.api_name, '接口id': api.id} for api in apilist],
-                'status': 1
-            }
-        except Exception as e:
-            result = {
-                'msg': "删除失败，错误信息为：" + str(e),
-                'status': 0
-            }
-            return Response(result, status=200)
-        return Response(result, status=200)
-
+        api_list = Api.objects.filter(pk__in=request.data['id'])
+        api_case_list = ApiCase.objects.filter(api__in=api_list)
+        for api in api_list:
+            # api.delete()      #物理删除
+            api.status = 0      #逻辑删除
+            api.save()
+            # 删除相关的case
+            delete_apicase(api_case_list)
+        return [{'接口名称': api.api_name, '接口id': api.id} for api in api_list]
 
 
 # ApiCase
 class ApiCaseList(generics.ListAPIView):
+    @try_result('获取接口测试用例列表')
     def get(self, request):
-        try:
-            queryset = ApiCase.objects.filter(~Q(status=0))
-            serializer = ApiCaseSerializer(queryset, many=True)
-            result = {
-                'msg': "获取接口列表成功！",
-                'data': serializer.data,
-                'status': 1
-            }
-
-            return Response(result, status=status.HTTP_200_OK)
-        except Exception as e:
-            result = {
-                'msg': "获取接口列表失败！" + str(e),
-                'status': 0
-            }
-            return Response(result)
+        queryset = ApiCase.objects.filter(~Q(status=0))
+        serializer = ApiCaseSerializer(queryset, many=True)
+        return serializer.data
 
 
 class QueryCaseList(APIView):
+    @try_result('查询接口测试用例列表')
     def post(self, request):
-        try:
-            text = request.data['text']
-            api = request.data['api']
-            caselist = ApiCase.objects.filter(~Q(status=0))
-            if (api):
-                print(api)
-                caselist = caselist.filter(api_id__in=api)
-            if (text):
-                if (text.isdigit()):
-                    caselist = caselist.filter(id=int(text))
-                else:
-                    caselist = caselist.filter(
-                        Q(case_name__icontains=text) | Q(body__icontains=text) | Q(expect__icontains=text))
-            print(caselist)
-            serializer = ApiCaseSerializer(caselist, many=True)
-            result = {
-                'msg': "查询接口列表成功！",
-                'data': serializer.data,
-                'status': 1
-            }
-            return Response(result, status=status.HTTP_200_OK)
-        except Exception as e:
-            result = {
-                'msg': "查询接口列表失败！" + str(e),
-                'status': 0
-            }
-            return Response(result)
+        text = request.data['text']
+        api = request.data['api']
+        case_list = ApiCase.objects.filter(~Q(status=0))
+        if api:
+            case_list = case_list.filter(api_id__in=api)
+        if text:
+            if text.isdigit():
+                case_list = case_list.filter(id=int(text))
+            else:
+                case_list = case_list.filter(
+                    Q(case_name__icontains=text) | Q(body__icontains=text) | Q(expect__icontains=text))
+        print(case_list)
+        serializer = ApiCaseSerializer(case_list, many=True)
+        return serializer.data
 
 
 class ApiCaseUpdate(APIView):
+    @try_result('更新接口测试用例')
     def post(self, request):
-        apicase = get_object_or_404(ApiCase, pk=request.data['id'])
-        serializer = ApiCaseSerializer(apicase, data=request.data)
+        api_case = get_object_or_404(ApiCase, pk=request.data['id'])
+        serializer = ApiCaseSerializer(api_case, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return serializer.data
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ApiCaseAdd(generics.CreateAPIView):
@@ -183,40 +127,27 @@ class ApiCaseAdd(generics.CreateAPIView):
 
 
 class ApiCaseDetail(APIView):
+    @try_result('查看接口测试用例详情')
     def get(self, request, pk):
-        apicase = get_object_or_404(ApiCase, pk=pk)
-        if apicase and apicase.status:
-            serializer = ApiCaseSerializer(apicase)
-            result = {"msg": "id为【%d】的Case查询成功！" % pk, "status": 1, "data": serializer.data}
-            return Response(result)
-        reslut = {"msg": "id为【%d】的Case不存在或已删除！" % pk, "status": 0},
-        return Response(reslut)
+        api_case = get_object_or_404(ApiCase, pk=pk)
+        if api_case and api_case.status:
+            serializer = ApiCaseSerializer(api_case)
+            return serializer.data
 
 
 class ApiCaseDelete(APIView):
+    @try_result('删除接口测试用例')
     def post(self, request):
-        try:
-            apicaselist = ApiCase.objects.filter(pk__in=request.data['id'])
-            delete_apicase(apicaselist)
-            result = {
-                'msg': "删除成功！",
-                'data': [case.case_name for case in apicaselist],
-                'status': 1
-            }
-        except Exception as e:
-            result = {
-                'msg': "删除失败，错误信息为：" + str(e),
-                'status': 0
-            }
-            return Response(result, status=200)
-        return Response(result, status=200)
+        api_case_list = ApiCase.objects.filter(pk__in=request.data['id'])
+        delete_apicase(api_case_list)
+        return [case.case_name for case in api_case_list]
 
 
 def delete_apicase(apicaselist):
-    for apicase in apicaselist:
-        apicase.delete()
-        # apicase.status = 0
-        # apicase.save()
+    for api_case in apicaselist:
+        # apicase.delete()      #物理删除
+        api_case.status = 0      #逻辑删除
+        api_case.save()
 
 
 # 执行Case

@@ -19,7 +19,7 @@ x = Xeger(limit=10)
 # print(fake.user_agent())
 # print(fake.text(max_nb_chars=5))
 # print(exrex.getone('[1-9]([^0-9]{4,10})'))
-print(exrex.getone('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'))
+print(exrex.getone('[a-zA-Z0-9\u4e00-\u4fa5~!@#$%^&*()_+`\-={}|\[\]\\:"<>?;\',\./]{12}'))
 
 
 # print(rstr.rstr('[a-zA-Z]',10,include='1$%'))
