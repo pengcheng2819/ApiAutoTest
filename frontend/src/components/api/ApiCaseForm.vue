@@ -36,19 +36,19 @@
       <el-tabs v-model="activeName" style="padding-bottom: 30px">
         <el-tab-pane label="Params" name="first">
           <json-viewer v-if="isView" v-model="form.params" :expand-depth=5 copyable boxed sort></json-viewer>
-          <json-code v-if="isNew||isEdit" v-model="form.params" :is-show-form="false"></json-code>
+          <json-code v-if="isNew||isEdit" v-model="form.params" ></json-code>
         </el-tab-pane>
         <el-tab-pane label="Body" name="second">
           <json-viewer v-if="isView" v-model="form.body" :expand-depth=5 copyable boxed sort></json-viewer>
-          <json-code v-if="isNew||isEdit" v-model="form.body" :is-show-form="false"></json-code>
+          <json-code v-if="isNew||isEdit" v-model="form.body" ></json-code>
         </el-tab-pane>
         <el-tab-pane label="Headers" name="third">
           <json-viewer v-if="isView" v-model="form.head" :expand-depth=5 copyable boxed sort></json-viewer>
-          <json-code v-if="isNew||isEdit" v-model="form.head" :is-show-form="false"></json-code>
+          <json-code v-if="isNew||isEdit" v-model="form.head" ></json-code>
         </el-tab-pane>
         <el-tab-pane label="Cookies" name="fourth">
           <json-viewer v-if="isView" v-model="form.cookies" :expand-depth=5 copyable boxed sort></json-viewer>
-          <json-code v-if="isNew||isEdit" v-model="form.cookies" :is-show-form="false"></json-code>
+          <json-code v-if="isNew||isEdit" v-model="form.cookies" ></json-code>
         </el-tab-pane>
       </el-tabs>
       <el-button type="primary" plain @click="testRunCase" v-if="isNew||isEdit">
@@ -57,7 +57,7 @@
       </el-button>
       <div class="separate">期望返回值</div>
       <json-viewer v-if="isView" v-model="form.expect" :expand-depth=5 copyable boxed sort></json-viewer>
-      <json-code v-if="isEdit||isNew" v-model="form.expect" :is-show-form="false"></json-code>
+      <json-code v-if="isEdit||isNew" v-model="form.expect" ></json-code>
 
       <el-form-item style="padding-top: 20px" v-if="isNew||isEdit">
         <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -115,7 +115,6 @@
       this.isView = this.$route.name === 'detailcase';
       this.isEdit = this.$route.name === 'editcase';
       this.isNew = this.$route.name === 'newcase';
-      document.body
       if (this.isEdit || this.isView) {
         this.setCaseForm(this.$route.query.caseId);
       }
@@ -203,13 +202,14 @@
           .then(res => {
             if (res.data.status) {
               that.form = res.data.data;
+              console.log(that.form);
               if (that.isView) {
                 //查看的时候，需要将字符串转为json，才能在插件中高亮跟折叠
-                that.form.body = JSON.parse(that.form.body);
-                that.form.expect = JSON.parse(that.form.expect);
-                that.form.params = JSON.parse(that.form.params);
-                that.form.head = JSON.parse(that.form.head);
-                that.form.cookies = JSON.parse(that.form.cookies);
+                that.form.body = JSON.parse(that.form.body?that.form.body:{});
+                that.form.expect = JSON.parse(that.form.expect?that.form.expect:{});
+                that.form.params = JSON.parse(that.form.params?that.form.params:{});
+                that.form.head = JSON.parse(that.form.head?that.form.head:{});
+                that.form.cookies = JSON.parse(that.form.cookies?that.form.cookies:{});
               }
             } else {
               this.$message({
@@ -272,6 +272,7 @@
       },
       testRunCase: function () {
         let that = this;
+        console.log(typeof this.form.body);
         let url = common.baseUrl + common.testruncase;
         let bodydata = JSON.parse(JSON.stringify(this.form));
         console.log(bodydata);

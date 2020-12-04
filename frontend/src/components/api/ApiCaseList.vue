@@ -130,8 +130,13 @@
           .then(function (res) {
             if (res.data.status === 1) {
               that.datalist = res.data.data;
-              that.total = res.data.data.length;
+              if (that.datalist) {
+                that.total = res.data.data.length;
+              } else {
+                that.total = 0;
+              }
               that.getPageDatas()
+
             } else {
               that.$message({
                 message: res.data.msg,
@@ -152,7 +157,11 @@
           .then(res => {
             if (res.data.status === 1) {
               that.datalist = res.data.data;
-              that.total = res.data.data.length;
+              if (res.data.data) {
+                that.total = res.data.data.length;
+              } else {
+                that.total = 0;
+              }
               that.getPageDatas();
             } else {
               this.$message({
@@ -254,7 +263,7 @@
       statusFormat: function (row, column) {
         for (var index in common.status) {
           if (row.status === common.status[index].value)
-            return common.status[index].title;
+            return common.caseStatus[index].title;
         }
         return '无效状态';
 

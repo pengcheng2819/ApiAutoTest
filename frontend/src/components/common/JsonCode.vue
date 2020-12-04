@@ -5,10 +5,9 @@
         <el-radio-group :disabled="false" plain v-model="isJson" size="medium">
           <el-radio-button label="raw"></el-radio-button>
           <el-radio-button label="json"></el-radio-button>
-          <el-radio-button v-if="isShowForm" label="form"></el-radio-button>
         </el-radio-group>
       </el-col>
-      <el-col :span="12" align="right" v-if="isJson==='json'">
+      <el-col :span="12" align="right" v-if="false">
         <el-select v-model="cmTheme" filterable placeholder="请选择" size="medium" style="width:120px">
           <el-option v-for="item in cmThemeOptions" :key="item" :label="item" :value="item"></el-option>
         </el-select>
@@ -18,18 +17,6 @@
         </el-select>
       </el-col>
     </el-row>
-
-    <codemirror
-      ref="myCm"
-      :value="editorValue"
-      :options="cmOptions"
-      @changes="onCmCodeChanges"
-      @blur="onCmBlur"
-      @keydown.native="onKeyDown"
-      @mousedown.native="onMouseDown"
-      @paste.native="OnPaste"
-      v-if="isJson==='json' && isShowForm">
-    </codemirror>
     <codemirror
       ref="myCm"
       :value="codeValue"
@@ -39,13 +26,12 @@
       @keydown.native="onKeyDown"
       @mousedown.native="onMouseDown"
       @paste.native="OnPaste"
-      v-if="isJson==='json' && !isShowForm">
+      v-if="isJson==='json' ">
     </codemirror>
-    <el-button v-if="false" @click="outmsg">输出code值</el-button>
+    <el-button v-if="true" @click="outmsg">输出code值</el-button>
 
     <el-input ref="myraw" v-if="isJson==='raw'" type="textarea" :autosize="{ minRows: 14, maxRows: 14}"
-              v-model="editorValue" @input="sendValue"></el-input>
-    <params-table v-if="isJson==='form' && isShowForm" v-model="codeValue" :is-show-del="true"></params-table>
+              v-model="editorValue" @change="sendValue"></el-input>
   </div>
 </template>
 
@@ -107,13 +93,11 @@
       event: 'getValue'//这个字段，是指父组件监听 getValue 事件
     },
     props: {
-      codeValue: [Array,String],
-      isShowForm: Boolean
+      codeValue: [String],
     },
     data() {
       return {
-        isJson: this.isShowForm ? 'form' : 'json',
-        formData: this.codeValue,
+        isJson: 'json',
         editorValue: this.codeValue,
         cmTheme: "idea", // codeMirror主题
         // codeMirror主题选项
@@ -266,29 +250,16 @@
         this.resetFoldGutter();
       },
       isJson: function (newValue, oldValue) {
-        if (oldValue === 'form') {
-          this.formToJson();
-        }
         if (newValue === 'raw') {
           this.editorValue = this.formatRaw();
         } else if (newValue === 'json') {
           this.editorValue = this.formatStrInJson(this.editorValue);
-        } else if (newValue === 'form') {
-          this.toFormdata()
-        }
-      },
-      formData: function (newValue, oldValue) {
-        if (this.isShowForm) {
-          this.sendValue();
         }
       },
       editorValue: function (newValue, oldValue) {
-        if (!this.isShowForm) {
-          this.sendValue();
-        }
-      }
+        this.sendValue();
+      },
     },
-
     methods: {
       // 切换编辑模式事件处理函数
       onEditorModeChange(value) {
@@ -360,24 +331,7 @@
       formatRaw() {
         return this.editorValue.toString().replace(/\n|\s/g, '');
       },
-      // 修改值
-      setValue(value) {
-        try {
-          if (typeof value != typeof "") {
-            this.$message.error(
-              "修改编辑框内容失败：编辑内容只能为字符串"
-            );
-            return;
-          }
-          if (this.cmOptions.mode == "application/json") {
-            this.editorValue = this.formatStrInJson(value);
-          } else {
-            this.editorValue = value;
-          }
-        } catch (e) {
-          this.$message.error("修改编辑框内容失败：" + e.toString());
-        }
-      },
+
       // 黏贴事件处理函数
       OnPaste(event) {
         if (this.cmOptions.mode == "application/json") {
@@ -417,9 +371,7 @@
       onCmCodeChanges(cm, changes) {
         this.editorValue = cm.getValue();
         this.resetLint();
-        if (!this.isShowForm) {
-          this.$emit('getValue', this.editorValue);
-        }
+        this.$emit('getValue', this.editorValue);
       },
       // 格式化字符串为json格式字符串
       formatStrInJson(strValue) {
@@ -443,59 +395,12 @@
         }
       },
       sendValue() {
-        if(this.isShowForm){
-        this.$emit('getValue', this.formData)}
-        else {
-          this.$emit('getValue', this.editorValue)
-        }
-      },
-      toFormdata() {
-        let obj = JSON.parse(this.editorValue);
-        for (let key in obj) {
-          let index = 0;
-          let type = 'text';
-          switch (typeof obj[key]) {
-            case "number":
-              type = 'number';
-              break;
-            case "boolean" :
-              type = 'checkbox';
-              break;
-            default:
-              type = 'text';
-          }
-          for (index in this.formData) {
-            if (key === this.formData[index].paramname) {
-              this.formData[index].value = obj[key];
-              this.formData[index].type = type;
-              break;
-            }
-          }
-          if (parseInt(index) === this.formData.length - 1) {
-
-            console.log(typeof obj[key]);
-            this.formData.splice(this.formData.length - 1, 0, {
-              paramname: key,
-              notnull: '',
-              type: type,
-              value: obj[key],
-              memo: ''
-            });
-          }
-        }
-        return
-      },
-      formToJson() {
-        let obj = {};
-        for (let index = 0; index < this.codeValue.length - 1; index++) {
-          obj[this.codeValue[index].paramname] = this.codeValue[index].value;
-        }
-        this.editorValue = JSON.stringify(obj);
+        this.$emit('getValue', this.editorValue)
       },
       outmsg() {
-        console.log('editor', this.editorValue);
-        console.log('code', this.codeValue)
-        console.log('formdata', this.formData)
+        console.log('editor',typeof this.editorValue);
+        console.log('code',typeof this.codeValue);
+
       },
     },
   };

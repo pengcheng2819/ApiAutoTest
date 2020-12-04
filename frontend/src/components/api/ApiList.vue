@@ -51,6 +51,9 @@
                 <span type="primary" @click="createCase(scope.row.id)">生成case</span>
               </el-dropdown-item>
               <el-dropdown-item>
+                <span type="primary" @click="createCaseOne(scope.row.id)">测试生成case</span>
+              </el-dropdown-item>
+              <el-dropdown-item>
                 <span @click="deleteApi([scope.row.id])">删除接口</span>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -80,7 +83,7 @@
 
 <script>
   import common from "../../common/js/common";
-
+  import {Loading} from 'element-ui'
   export default {
     name: "ApiList",
     data() {
@@ -111,7 +114,9 @@
           .then(function (res) {
             if (res.data.status === 1) {
               that.apilist = res.data.data;
-              that.total = res.data.data.length;
+              if (that.apilist) {
+                that.total = res.data.data.length;
+              }
               that.getPageApis()
             } else {
 
@@ -134,7 +139,11 @@
           .then(res => {
             if (res.data.status === 1) {
               that.apilist = res.data.data;
-              that.total = res.data.data.length;
+              if (that.apilist) {
+                that.total = res.data.data.length;
+              }else {
+                that.total=0;
+              }
               that.getPageApis();
             } else {
               this.$message({
@@ -195,9 +204,53 @@
         })
           .then(() => {
             let that = this;
+            this.openFullScreen();
             that.$axios
               .post(common.baseUrl + common.createcase, {
-                id: id
+                id: id,
+                istest: false,
+              })
+              .then(res => {
+                if (res.data.status === 1) {
+                  that.getApiList();
+                  this.closeFullScreen(this.openFullScreen());
+                  this.$message({
+                    type: 'success',
+                    message: '生成成功!'
+                  });
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '生成失败' + res.data.msg
+                  });
+                }
+              })
+              .catch(err => {
+                this.$message({
+                  type: 'error',
+                  message: '生成失败' + err.toString()
+                });
+              });
+
+          }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消生成'
+          });
+        });
+      },
+      createCaseOne: function (id) {
+        this.$confirm('您确定需要为I为【' + id.toString() + '】的接口自动生成一条case吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            let that = this;
+            that.$axios
+              .post(common.baseUrl + common.createcase, {
+                id: id,
+                istest: true,
               })
               .then(res => {
                 if (res.data.status === 1) {
@@ -267,7 +320,18 @@
           });
         });
       },
-
+      openFullScreen: function(){
+        const loading = this.$loading({
+          lock:true,
+          text:'正在努力,请稍候',
+          spinner:'el-icon-loading',
+          background:'rgba(0,0,0,0.7)'
+        });
+        return loading;
+      },
+      closeFullScreen(loading){
+        loading.close();
+      },
       statusFormat: function (row, column) {
         for (var index in common.status) {
           if (row.status === common.status[index].value)

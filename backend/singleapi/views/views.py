@@ -4,13 +4,13 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
-
+from backend.singleapi.tools import try_result
 
 from backend.singleapi.serializers import ApiCaseSerializer, ApiSerializer
 from rest_framework.views import APIView
 from backend.singleapi.models import Api, ApiCase
 import requests
-from backend.singleapi.tools import try_result
+
 
 
 # Api
@@ -104,7 +104,6 @@ class QueryCaseList(APIView):
             else:
                 case_list = case_list.filter(
                     Q(case_name__icontains=text) | Q(body__icontains=text) | Q(expect__icontains=text))
-        print(case_list)
         serializer = ApiCaseSerializer(case_list, many=True)
         return serializer.data
 

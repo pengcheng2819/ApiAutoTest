@@ -38,6 +38,7 @@ class ApiCase(models.Model):
     head = models.CharField(max_length=1000,blank=True)
     body = models.CharField(max_length=10000,blank=True)
     expect = models.CharField(max_length=10000)
+    is_pass = models.BooleanField(default=True)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
     status = models.IntegerField(default=1)

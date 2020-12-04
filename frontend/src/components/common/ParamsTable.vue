@@ -169,7 +169,7 @@
         this.value.splice(index, 1);
       },
       outmsg: function () {
-        console.log(this.value);
+        console.log(typeof this.value);
       },
       //切换类型的时候，把当前值置空
       setNull(index) {

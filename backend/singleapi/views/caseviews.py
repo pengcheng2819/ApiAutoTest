@@ -1,11 +1,9 @@
 # 作者      : pengcheng
 # 创建时间  : 2020/11/25 13:46
 import exrex
-from django.db.models import Q
-from rest_framework import status
-from rest_framework.response import Response
 from rest_framework.views import APIView
 import json
+import random
 
 from backend.singleapi.models import Api, ApiCase
 from backend.singleapi.tools import try_result
@@ -37,11 +35,24 @@ class CreateCase(APIView):
     @try_result('自动生成CASE')
     def post(self, request):
         apiid = request.data['id']
+        istest = request.data['istest']
         apiobj = Api.objects.get(id=apiid)
-        paramslist = self.need_create(apiobj.params)
+        paramslist = self.need_create(apiobj.params)    #判断是否
         bodylist = self.need_create(apiobj.base_body)
-        return {'paramslist':paramslist,'bodylist':bodylist}
-
+        paramtrue = self.get_true(paramslist)   #获取所有正向的用例
+        bodytrue = self.get_true(bodylist)
+        if istest:  #判断是否为测试生成
+            param = self.get_one(paramtrue)
+            body = self.get_one(bodytrue)
+            ids = self.insert_case(apiobj, [param], [body], paramtrue, bodytrue)
+            return {'ids':ids}
+        else:
+            apicaselist = ApiCase.objects.filter(api_id=apiid,status=2)
+            self.del_case(apicaselist)
+            params = self.get_all(paramslist,paramtrue)
+            bodys = self.get_all(bodylist, bodytrue)
+            ids = self.insert_case(apiobj,params,bodys,paramtrue,bodytrue)
+            return {'ids':ids}
 
     # 判断是否需要自动生成case
     def need_create(self, obj):
@@ -52,7 +63,6 @@ class CreateCase(APIView):
             paramlist = json.loads(obj)
             paramobj = {}
             for param in paramlist:
-                # print(param)
                 if param['type'] == 'string':
                     lengthlist = []
                     # 如果有字符串长度测试点，则计算出需要测试的长度case
@@ -74,9 +84,7 @@ class CreateCase(APIView):
                     if 'string-select' in param['condition']:
                         selectlist = self.string_select(param['conditionValue']['string-select']['input'][0],
                                                         randomvalue)
-                        # print(selectlist)
                         paramobj[param['paramname']] = selectlist
-                        # print(paramobj)
                         continue
                     # 正则处理
                     if 'string-regular' in param['condition']:
@@ -92,9 +100,7 @@ class CreateCase(APIView):
                     paramobj[param['paramname']] = self.string_all(lengthlist,randomvalue)
                 elif param['type'] == 'int':
                     pass
-            print(paramobj)
             return paramobj
-
 
     # 限定选项处理,一个正向,一个反向
     def string_select(self, select, randomvalue):
@@ -106,9 +112,9 @@ class CreateCase(APIView):
         choiceobj = []
         for choice in choicelist:
             if choice:
-                choiceobj.append({'titile': '符合可选值', 'value': choice + randomvalue, 'ispass': True})
+                choiceobj.append({'title': '符合可选值', 'value': choice + randomvalue, 'ispass': True})
                 discontent = exrex.getone('[^' + choice + ']{' + str(len(choice)) + '}')
-                choiceobj.append({'titile': '不符合可选值', 'value': discontent + randomvalue, 'ispass': False})
+                choiceobj.append({'title': '不符合可选值', 'value': discontent + randomvalue, 'ispass': False})
         return choiceobj
 
     # 生成需要测试的字符长度
@@ -170,7 +176,6 @@ class CreateCase(APIView):
         lengthlist : 测试长度的caselist
         randomvalue : 动态字符串
         '''
-        # print(special,lengthlist)
         input = special['input']
         specialobj = []
         if special['value'] == 'notinclude':
@@ -229,3 +234,74 @@ class CreateCase(APIView):
                 value = exrex.getone( self.regular['all'] + '+')
                 allobj.append({'title': '符合要求的字符串', 'value': value + randomvalue, 'ispass': True})
         return allobj
+
+    # 删除之前生成的case
+    def del_case(self,caselist):
+        for case in caselist:
+            case.status = 0
+            case.save()
+
+    # 测试请求接口时,只挑选出一个可行组合
+    def get_true(self,paramslist):
+        params = {}
+        for key,value in paramslist.items():
+            params[key] = [x for x in value if x['ispass']]
+        return params
+
+    def get_one(self,paramslist):
+        params = {}
+        if paramslist:
+            for key,value in paramslist.items():
+                if value:
+                    params[key] = value[random.randint(0,len(value)-1)]
+                else:
+                    params[key] = value
+        return params
+
+    # 测试所有接口可选值进行组合
+    def get_all(self,paramslist,paramtrue):
+        params = []
+        for key,value in paramslist.items():
+            for v in value:
+                param = self.get_one(paramtrue)
+                param[key] = v
+                params.append(param)
+        return params
+
+    def insert_case(self,apiobj,params,bodys,paramtrue,bodytrue):
+        case = {
+            'api':apiobj,
+            'path':apiobj.path,
+            'request_method':apiobj.request_method,
+            'head':apiobj.base_head,
+            'cookies':apiobj.cookies,
+            'status':2,
+        }
+        caseids = []
+        for paramorbody in ['params','body']:
+            list = params if paramorbody=='params' else bodys
+            if list and list[0]:
+                otherture = bodytrue if paramorbody == 'params' else paramtrue
+                for l in list :
+                    case['case_name']=''
+                    case['is_pass'] = True
+                    case['memo'] = '测试'+paramorbody+'参数\n'
+                    case['expect'] = {}
+                    for key, value in l.items():
+                        case['case_name'] += '【' + key + '】' + (value['title'] if not value['ispass'] else '')
+                        case['is_pass'] = case['is_pass'] and value['ispass']
+                        case['memo'] += '【' + key + '】\t' + value['title'] + '\t' + (
+                            '合规字段\n' if value['ispass'] else '非法字段' + '\n')
+                        case[paramorbody][key] = value['value']
+                    theotherpara = self.get_one(otherture)
+                    for key, value in theotherpara.items():
+                        case[paramorbody] = {}
+                        theotherpara[key]=value['value']
+                    otherkey = 'body' if paramorbody=='params' else 'params'
+                    case[paramorbody] = json.dumps(case[paramorbody],ensure_ascii=False)
+                    case[otherkey] = json.dumps(theotherpara,ensure_ascii=False)
+                    case['case_name'] += '预期通过' if case['is_pass'] else '预期不通过'
+                    apicase = ApiCase.objects.create(**case)
+                    caseids.append(apicase.id)
+        return caseids
+
