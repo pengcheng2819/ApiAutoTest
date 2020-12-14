@@ -12,7 +12,6 @@ urlpatterns = [
     path('newapi/', views.ApiAdd.as_view(), name='newapi'),
     path('delapi/', views.ApiDelete.as_view(), name='delapi'),
     path('<int:pk>/apidetail/', views.ApiDetail.as_view(), name='apidetail'),
-
     path('newcase/', views.ApiCaseAdd.as_view(), name='newapicase'),
     path('caselist/', views.ApiCaseList.as_view(), name='caselist'),
     path('querycaselist/', views.QueryCaseList.as_view(), name='queryapilist'),
@@ -20,13 +19,10 @@ urlpatterns = [
     path('delapicase/', views.ApiCaseDelete.as_view(), name='delapicase'),
     path('<int:pk>/casedetail/', views.ApiCaseDetail.as_view(), name='editcase'),
     path('testruncase/', views.TestRunCase.as_view(), name='runcase'),
-
     path('columntypelist/', dictviews.ColumnTypeList.as_view(), name='columntypelist'),
     path('optiontypelist/', dictviews.OptionTypeList.as_view(), name='optiontypelist'),
     path('optionlist/', dictviews.OptionList.as_view(), name='optionlist'),
-
     path('createcase/', caseviews.CreateCase.as_view(), name='createcase'),
-
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 ]

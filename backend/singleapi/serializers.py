@@ -9,7 +9,8 @@ class ApiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Api
         fields = ['id', 'api_name', 'path', 'memo', 'request_method', 'params', 'cookies',
-                  'base_head','post_type', 'base_body', 'base_expect', 'owner', 'create_time', 'update_time', 'status']
+                  'base_head', 'post_type', 'base_body', 'response_demo', 'expect_pass', 'expect_fail', 'owner',
+                  'create_time', 'update_time', 'status']
 
 
 class ApiCaseSerializer(serializers.ModelSerializer):
@@ -22,16 +23,16 @@ class ApiCaseSerializer(serializers.ModelSerializer):
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = OptionDict
-        fields = ['option_type','title','value','widget','status']
+        fields = ['option_type', 'title', 'value', 'widget', 'status']
 
 
 class ColumnTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ColumnTypeDict
-        fields = ['title','value','status']
+        fields = ['title', 'value', 'status']
 
 
 class OptionTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = OptionTypeDict
-        fields = ['typekey','column_type','title','status']
+        fields = ['typekey', 'column_type', 'title', 'status']

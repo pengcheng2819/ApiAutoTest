@@ -1,7 +1,7 @@
 <template>
   <div class="code-mirror-div">
     <el-row style="margin-bottom: 5px">
-      <el-col :span="12">
+      <el-col :span="12" v-if="isShowRaw">
         <el-radio-group :disabled="false" plain v-model="isJson" size="medium">
           <el-radio-button label="raw"></el-radio-button>
           <el-radio-button label="json"></el-radio-button>
@@ -28,7 +28,7 @@
       @paste.native="OnPaste"
       v-if="isJson==='json' ">
     </codemirror>
-    <el-button v-if="true" @click="outmsg">输出code值</el-button>
+    <el-button v-if="false" @click="outmsg">输出code值</el-button>
 
     <el-input ref="myraw" v-if="isJson==='raw'" type="textarea" :autosize="{ minRows: 14, maxRows: 14}"
               v-model="editorValue" @change="sendValue"></el-input>
@@ -94,6 +94,11 @@
     },
     props: {
       codeValue: [String],
+      isShowRaw:{
+        type: Boolean,
+        required:false,
+        default:true
+      }
     },
     data() {
       return {

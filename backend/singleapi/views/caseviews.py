@@ -248,6 +248,7 @@ class CreateCase(APIView):
             params[key] = [x for x in value if x['ispass']]
         return params
 
+    # 获取一个通用的结果为pass的数据
     def get_one(self,paramslist):
         params = {}
         if paramslist:
@@ -268,7 +269,9 @@ class CreateCase(APIView):
                 params.append(param)
         return params
 
+    # 往数据库插入新增的case
     def insert_case(self,apiobj,params,bodys,paramtrue,bodytrue):
+        # 初始化case的固定值
         case = {
             'api':apiobj,
             'path':apiobj.path,
@@ -276,32 +279,44 @@ class CreateCase(APIView):
             'head':apiobj.base_head,
             'cookies':apiobj.cookies,
             'status':2,
+            'body':{},
+            'params':{},
         }
-        caseids = []
+        caseids = []        # 存新增的case的ID
         for paramorbody in ['params','body']:
             list = params if paramorbody=='params' else bodys
+            # 判断是否有可选的params或者body
             if list and list[0]:
                 otherture = bodytrue if paramorbody == 'params' else paramtrue
+                # 拼接请求体
                 for l in list :
+                    # 需要根据测试情况拼接的参数
                     case['case_name']=''
-                    case['is_pass'] = True
-                    case['memo'] = '测试'+paramorbody+'参数\n'
-                    case['expect'] = {}
+                    case['is_pass'] = True  # 最终的预期请求结果初始化
+                    case['memo'] = '测试'+paramorbody+'参数\n'      # 详细的测试说明初始化
+                    case[paramorbody] = {}  # 请求体初始化
+                    # 循环请求参数
                     for key, value in l.items():
+                        # 拼接用例名称,最终请求结果,详细说明
                         case['case_name'] += '【' + key + '】' + (value['title'] if not value['ispass'] else '')
                         case['is_pass'] = case['is_pass'] and value['ispass']
                         case['memo'] += '【' + key + '】\t' + value['title'] + '\t' + (
                             '合规字段\n' if value['ispass'] else '非法字段' + '\n')
+                        # 拼接请求参数
                         case[paramorbody][key] = value['value']
+                    # 获取另外一个参数的通用测试结果pass的数据
                     theotherpara = self.get_one(otherture)
                     for key, value in theotherpara.items():
-                        case[paramorbody] = {}
-                        theotherpara[key]=value['value']
-                    otherkey = 'body' if paramorbody=='params' else 'params'
+                        theotherpara[key]=value['value']    # 字典结构简化
+                    otherkey = 'body' if paramorbody=='params' else 'params'    #获取另一个参数名称
+                    # 两个参数均转化为字符串存储
                     case[paramorbody] = json.dumps(case[paramorbody],ensure_ascii=False)
                     case[otherkey] = json.dumps(theotherpara,ensure_ascii=False)
                     case['case_name'] += '预期通过' if case['is_pass'] else '预期不通过'
+                    case['expect'] = apiobj.expect_pass if case['is_pass'] else apiobj.expect_fail
+                    # 保存apicase
                     apicase = ApiCase.objects.create(**case)
+                    # 添加新增好的case Id,用于最后返回
                     caseids.append(apicase.id)
         return caseids
 

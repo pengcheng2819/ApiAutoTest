@@ -29,7 +29,7 @@ class OptionTypeDictAdmin(admin.ModelAdmin):
 @admin.register(Api)
 class ApiAdmin(admin.ModelAdmin):
     list_display = ('id', 'api_name', 'path', 'memo', 'request_method', 'params', 'cookies',
-                  'base_head','post_type', 'base_body', 'base_expect', 'owner', 'create_time', 'update_time', 'status')
+                  'base_head','post_type', 'base_body','response_demo', 'expect_pass','expect_fail', 'owner', 'create_time', 'update_time', 'status')
     list_per_page = 50
     list_filter = ('request_method','status')
     search_fields = ('api_name', 'path', 'id','owner')

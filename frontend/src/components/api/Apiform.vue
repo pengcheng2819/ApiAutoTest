@@ -62,24 +62,52 @@
           <json-code v-if="isEdit||isNew" v-model="apiform.cookies"></json-code>
         </el-tab-pane>
       </el-tabs>
-      <el-button type="primary" @click="outMsg" plain v-if="true">
+      <el-button type="primary" @click="outMsg" plain v-if="false">
         测试运行
         <i class="el-icon-caret-right el-icon--right"></i>
       </el-button>
-      <div class="separate">返回校验</div>
+
+      <div class="separate">接口正确返回样例</div>
+      <el-steps :active="stepActive" finish-status="success">
+        <el-step title="输入样例"></el-step>
+        <el-step title="设置校验"></el-step>
+        <el-step title="综合展示"></el-step>
+      </el-steps>
+      <json-viewer v-if="isView&&stepActive===0" v-model="apiform.response_demo" :expand-depth=5 copyable boxed sort></json-viewer>
+      <json-code v-if="(isEdit||isNew)&&stepActive===0" v-model="apiform.response_demo" :is-show-raw="false"></json-code>
+
+      <response-check v-if="stepActive===1"></response-check>
+      <div align="center">
+        <el-button style="margin-top: 5px;" @click="setStepActive(-1)">上一步</el-button>
+        <el-button style="margin-top: 5px;" @click="setStepActive(1)">下一步</el-button>
+      </div>
+
+<!--      <div class="separate">接口返回树</div>-->
+<!--      <obj-tree></obj-tree>-->
+<!--      <el-row>-->
+<!--        <el-col :span="12">-->
+<!--          <div class="separate">通用正向校验</div>-->
+<!--        </el-col>-->
+<!--        <el-col :span="12">-->
+<!--          <div class="separate">通用反向校验</div>-->
+<!--        </el-col>-->
+<!--      </el-row>-->
+
       <!--      <json-viewer v-if="isView" v-model="apiform.base_expect" :expand-depth=5 copyable boxed sort></json-viewer>-->
       <!--      <json-code v-model="apiform.base_expect" :is-show-form="true"></json-code>-->
       <!--      <params-table v-model="apiform.base_expect" :column-type="columntype" :optiontype="optiontype"-->
       <!--                    :options="options" :is-show-del="true"></params-table>-->
-      <el-row>
-        <el-col :span="12">
+<!--      <el-row>-->
+<!--        <el-col :span="12">-->
+<!--          <json-viewer v-if="isView" v-model="apiform.expect_pass" :expand-depth=5 copyable boxed sort></json-viewer>-->
+<!--          <json-code v-if="isEdit||isNew" v-model="apiform.expect_pass" :is-show-raw="false"></json-code>-->
+<!--        </el-col>-->
+<!--        <el-col :span="12">-->
+<!--          <json-viewer v-if="isView" v-model="apiform.expect_fail" :expand-depth=5 copyable boxed sort></json-viewer>-->
+<!--          <json-code v-if="isEdit||isNew" v-model="apiform.expect_fail" :is-show-raw="false"></json-code>-->
 
-          <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 6}" v-model="apiform.base_expect[0]"></el-input>
-        </el-col>
-        <el-col :span="12">
-          <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 6}" v-model="apiform.base_expect[1]"></el-input>
-        </el-col>
-      </el-row>
+<!--        </el-col>-->
+<!--      </el-row>-->
       <el-form-item style="padding-top: 20px" v-if="isNew||isEdit">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="goBackPage">取消</el-button>
@@ -99,10 +127,12 @@
   import "codemirror/theme/idea.css"
   import "codemirror/mode/javascript/javascript"; // 这里引入的模式的js，根据设置的mode引入，一定要引入！！
   import JsonCode from "../common/JsonCode";
+  import ObjTree from "../common/ObjTree";
+  import ResponseCheck from "../common/ResponseCheck";
 
   export default {
     name: "Apiform",
-    components: {ParamsTable, JsonInput, JsonCode},
+    components: {ParamsTable, JsonInput, JsonCode, ObjTree,ResponseCheck},
     data() {
       return {
         apiform: {
@@ -114,12 +144,15 @@
           cookies: '{}',
           base_head: '{}',
           base_body: [JSON.parse(JSON.stringify(common.formDataNull))],
-          base_expect: ['',''],
+          response_demo: '{}',
+          expect_pass: '{"status":1}',
+          expect_fail: '{"status":0}',
           owner: '',
           status: '',
         },
         common: common,
         activeName: 'first',
+        stepActive: 0,
         isView: false,
         isEdit: false,
         isNew: true,
@@ -146,20 +179,16 @@
         let that = this;
         let url = common.baseUrl + common.newapi;
         let bodydata = JSON.parse(JSON.stringify(that.apiform));
-        let paramList = [bodydata.params, bodydata.base_body];
         //提交时需要去掉最后一行空的
         if (common.need_del_null(bodydata.params)) {
           bodydata.params.pop();
-        }
-        if (common.need_del_null(bodydata.base_expect)) {
-          bodydata.base_expect.pop();
         }
         if (common.need_del_null(bodydata.base_body)) {
           bodydata.base_body.pop();
         }
         bodydata.params = JSON.stringify(bodydata.params);
-        bodydata.base_expect = JSON.stringify(bodydata.base_expect);
         bodydata.base_body = JSON.stringify(bodydata.base_body);
+
         if (that.isEdit) {
           url = common.baseUrl + common.editapi;
           bodydata['id'] = that.$route.query.apiId;
@@ -167,7 +196,6 @@
         that.$axios
           .post(url, bodydata)
           .then(res => {
-
               let msg = that.isNew ? "恭喜您添加接口成功！" : "恭喜您编辑接口成功！";
               this.$router.push({name: 'apilist'});
               this.$message({
@@ -223,17 +251,17 @@
               //需要将表格数据的字符串转为对象
               that.apiform.params = JSON.parse(that.apiform.params ? that.apiform.params : []);
               that.apiform.base_body = JSON.parse(that.apiform.base_body ? that.apiform.base_body : []);
-              that.apiform.base_expect = JSON.parse(that.apiform.base_expect).length!=0 ? JSON.parse(that.apiform.base_expect) : ['',''];
               if (that.isView) {
                 //查看的时候，需要将字符串转为json，才能在插件中高亮跟折叠
                 that.apiform.base_head = JSON.parse(that.apiform.base_head ? that.apiform.base_head : '{}');
                 that.apiform.cookies = JSON.parse(that.apiform.cookies ? that.apiform.cookies : '{}');
+                that.apiform.expect_pass = JSON.parse(that.apiform.expect_pass ? that.apiform.expect_pass : '{}');
+                that.apiform.expect_fail = JSON.parse(that.apiform.expect_fail ? that.apiform.expect_fail : '{}');
               }
               if (that.isEdit) {
                 // 编辑的时候自动新增一行空数据
                 that.apiform.params.push(JSON.parse(JSON.stringify(common.formDataNull)));
                 that.apiform.base_body.push(JSON.parse(JSON.stringify(common.formDataNull)));
-
               }
             } else {
               this.$message({
@@ -310,6 +338,11 @@
           .catch(function (err) {
             that.$message.error(err.toString());
           })
+      },
+      setStepActive(id) {
+        if((id>0 && this.stepActive<3)||(id<0 && this.stepActive>0)){
+          this.stepActive = this.stepActive+id;
+        }
       },
 
     },

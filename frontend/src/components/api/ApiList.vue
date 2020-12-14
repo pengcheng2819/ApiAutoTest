@@ -219,6 +219,7 @@
                     message: '生成成功!'
                   });
                 } else {
+                  this.closeFullScreen(this.openFullScreen());
                   this.$message({
                     type: 'error',
                     message: '生成失败' + res.data.msg
@@ -226,6 +227,7 @@
                 }
               })
               .catch(err => {
+                this.closeFullScreen(this.openFullScreen());
                 this.$message({
                   type: 'error',
                   message: '生成失败' + err.toString()

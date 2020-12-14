@@ -23,12 +23,9 @@
       <el-form-item label="接口路径：">
         <el-input v-model="form.path" disabled></el-input>
       </el-form-item>
-
       <el-form-item label="用例名称：">
         <el-input v-model="form.case_name"></el-input>
       </el-form-item>
-
-
       <el-form-item label="用例描述：">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 6}" v-model="form.memo"></el-input>
       </el-form-item>
@@ -202,7 +199,7 @@
           .then(res => {
             if (res.data.status) {
               that.form = res.data.data;
-              console.log(that.form);
+              // console.log(that.form);
               if (that.isView) {
                 //查看的时候，需要将字符串转为json，才能在插件中高亮跟折叠
                 that.form.body = JSON.parse(that.form.body?that.form.body:{});
