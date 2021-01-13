@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fe755bd-f89f-4666-bf3b-c960c81b8fcf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/common/ObjTree.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/common/ResponseCheck.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/singleapi/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/singleapi/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/singleapi/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/singleapi/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/singleapi/views/caseviews.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/singleapi/views/caseviews.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/api/ApiCaseForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/api/ApiCaseForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/api/ApiList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/api/ApiList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/api/Apiform.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/api/Apiform.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/common/JsonCode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/common/JsonCode.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +52,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../yapi/vendors" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -302,7 +292,9 @@
       <workItem from="1606095862861" duration="2948000" />
       <workItem from="1606099002715" duration="11784000" />
       <workItem from="1606116915487" duration="279122000" />
-      <workItem from="1607510874915" duration="3131000" />
+      <workItem from="1607510874915" duration="3840000" />
+      <workItem from="1609143179628" duration="522000" />
+      <workItem from="1610420078792" duration="28305000" />
     </task>
     <task id="LOCAL-00001" summary="Json编辑器">
       <created>1596893940121</created>
@@ -472,7 +464,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607074792043</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="公司最后一次提交">
+      <created>1607936025569</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1607936025569</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +500,8 @@
     <MESSAGE value="add column type" />
     <MESSAGE value="add decorator" />
     <MESSAGE value="change JsonCode.vue" />
-    <option name="LAST_COMMIT_MESSAGE" value="change JsonCode.vue" />
+    <MESSAGE value="公司最后一次提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="公司最后一次提交" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="179" key="#Inspections" timestamp="1607323562426">
@@ -524,11 +524,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="655" y="217" key="#run_dev/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606989823267" />
-    <state x="596" y="86" key="CommitChangelistDialog2" timestamp="1607074789737">
+    <state x="596" y="86" key="CommitChangelistDialog2" timestamp="1607936021097">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="344" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1605436011012" />
-    <state x="596" y="86" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607074789737" />
+    <state x="596" y="86" key="CommitChangelistDialog2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607936021097" />
     <state x="651" y="169" key="FileChooserDialogImpl" timestamp="1607570867864">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -537,42 +537,34 @@
     <state width="1877" height="257" key="GridCell.Tab.0.bottom" timestamp="1607504511657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
     <state width="1877" height="257" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511657" />
     <state width="1877" height="257" key="GridCell.Tab.0.center" timestamp="1607504511657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
     <state width="1877" height="257" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511657" />
     <state width="1877" height="257" key="GridCell.Tab.0.left" timestamp="1607504511656">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
     <state width="1877" height="257" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511656" />
     <state width="1877" height="257" key="GridCell.Tab.0.right" timestamp="1607504511657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1599150045636" />
     <state width="1877" height="257" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511657" />
     <state width="1877" height="257" key="GridCell.Tab.1.bottom" timestamp="1607504511657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1599150045637" />
     <state width="1877" height="257" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511657" />
     <state width="1877" height="257" key="GridCell.Tab.1.center" timestamp="1607504511657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1599150045637" />
     <state width="1877" height="257" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511657" />
     <state width="1877" height="257" key="GridCell.Tab.1.left" timestamp="1607504511657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1599150045637" />
     <state width="1877" height="257" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511657" />
     <state width="1877" height="257" key="GridCell.Tab.1.right" timestamp="1607504511657">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1322" height="216" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1599150045637" />
     <state width="1877" height="257" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607504511657" />
     <state width="1877" height="237" key="GridCell.Tab.2.bottom" timestamp="1606990091500">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -623,11 +615,11 @@
     </state>
     <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1603976286329" />
     <state x="259" y="0" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1606465690400" />
-    <state x="387" y="137" key="Vcs.Push.Dialog.v2" timestamp="1607074794934">
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2" timestamp="1610517561909">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1605429153101" />
-    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1607074794934" />
+    <state x="387" y="137" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1610517561909" />
     <state x="510" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1607510887998">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

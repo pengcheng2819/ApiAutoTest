@@ -67,47 +67,56 @@
         <i class="el-icon-caret-right el-icon--right"></i>
       </el-button>
 
+      <div class="separate">通用校验</div>
+      <el-tabs v-model="activeNamecheck" style="padding-bottom: 30px">
+        <el-tab-pane label="CASE通过" name="pass">
+          <json-viewer v-if="isView&&stepActive===0" v-model="apiform.expect_pass" :expand-depth=5 copyable boxed
+                       sort></json-viewer>
+          <json-code v-if="(isEdit||isNew)&&stepActive===0" v-model="apiform.expect_pass"
+                     :is-show-raw="false"></json-code>
+        </el-tab-pane>
+        <el-tab-pane label="CASE失败" name="fail">
+          <json-viewer v-if="isView&&stepActive===0" v-model="apiform.expect_fail" :expand-depth=5 copyable boxed
+                       sort></json-viewer>
+          <json-code v-if="(isEdit||isNew)&&stepActive===0" v-model="apiform.expect_fail"
+                     :is-show-raw="false"></json-code>
+        </el-tab-pane>
+      </el-tabs>
+
       <div class="separate">接口正确返回样例</div>
-      <el-steps :active="stepActive" finish-status="success">
-        <el-step title="输入样例"></el-step>
-        <el-step title="设置校验"></el-step>
-        <el-step title="综合展示"></el-step>
-      </el-steps>
-      <json-viewer v-if="isView&&stepActive===0" v-model="apiform.response_demo" :expand-depth=5 copyable boxed sort></json-viewer>
-      <json-code v-if="(isEdit||isNew)&&stepActive===0" v-model="apiform.response_demo" :is-show-raw="false"></json-code>
 
-      <response-check v-if="stepActive===1"></response-check>
-      <div align="center">
-        <el-button style="margin-top: 5px;" @click="setStepActive(-1)">上一步</el-button>
-        <el-button style="margin-top: 5px;" @click="setStepActive(1)">下一步</el-button>
-      </div>
+      <json-viewer v-if="isView&&stepActive===0" v-model="apiform.response_demo" :expand-depth=5 copyable boxed
+                   sort></json-viewer>
+      <json-code v-if="(isEdit||isNew)&&stepActive===0" v-model="apiform.response_demo"
+                 :is-show-raw="false"></json-code>
 
-<!--      <div class="separate">接口返回树</div>-->
-<!--      <obj-tree></obj-tree>-->
-<!--      <el-row>-->
-<!--        <el-col :span="12">-->
-<!--          <div class="separate">通用正向校验</div>-->
-<!--        </el-col>-->
-<!--        <el-col :span="12">-->
-<!--          <div class="separate">通用反向校验</div>-->
-<!--        </el-col>-->
-<!--      </el-row>-->
+
+      <!--      <div class="separate">接口返回树</div>-->
+      <!--      <obj-tree></obj-tree>-->
+      <!--      <el-row>-->
+      <!--        <el-col :span="12">-->
+      <!--          <div class="separate">通用正向校验</div>-->
+      <!--        </el-col>-->
+      <!--        <el-col :span="12">-->
+      <!--          <div class="separate">通用反向校验</div>-->
+      <!--        </el-col>-->
+      <!--      </el-row>-->
 
       <!--      <json-viewer v-if="isView" v-model="apiform.base_expect" :expand-depth=5 copyable boxed sort></json-viewer>-->
       <!--      <json-code v-model="apiform.base_expect" :is-show-form="true"></json-code>-->
       <!--      <params-table v-model="apiform.base_expect" :column-type="columntype" :optiontype="optiontype"-->
       <!--                    :options="options" :is-show-del="true"></params-table>-->
-<!--      <el-row>-->
-<!--        <el-col :span="12">-->
-<!--          <json-viewer v-if="isView" v-model="apiform.expect_pass" :expand-depth=5 copyable boxed sort></json-viewer>-->
-<!--          <json-code v-if="isEdit||isNew" v-model="apiform.expect_pass" :is-show-raw="false"></json-code>-->
-<!--        </el-col>-->
-<!--        <el-col :span="12">-->
-<!--          <json-viewer v-if="isView" v-model="apiform.expect_fail" :expand-depth=5 copyable boxed sort></json-viewer>-->
-<!--          <json-code v-if="isEdit||isNew" v-model="apiform.expect_fail" :is-show-raw="false"></json-code>-->
+      <!--      <el-row>-->
+      <!--        <el-col :span="12">-->
+      <!--          <json-viewer v-if="isView" v-model="apiform.expect_pass" :expand-depth=5 copyable boxed sort></json-viewer>-->
+      <!--          <json-code v-if="isEdit||isNew" v-model="apiform.expect_pass" :is-show-raw="false"></json-code>-->
+      <!--        </el-col>-->
+      <!--        <el-col :span="12">-->
+      <!--          <json-viewer v-if="isView" v-model="apiform.expect_fail" :expand-depth=5 copyable boxed sort></json-viewer>-->
+      <!--          <json-code v-if="isEdit||isNew" v-model="apiform.expect_fail" :is-show-raw="false"></json-code>-->
 
-<!--        </el-col>-->
-<!--      </el-row>-->
+      <!--        </el-col>-->
+      <!--      </el-row>-->
       <el-form-item style="padding-top: 20px" v-if="isNew||isEdit">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="goBackPage">取消</el-button>
@@ -132,7 +141,7 @@
 
   export default {
     name: "Apiform",
-    components: {ParamsTable, JsonInput, JsonCode, ObjTree,ResponseCheck},
+    components: {ParamsTable, JsonInput, JsonCode, ObjTree, ResponseCheck},
     data() {
       return {
         apiform: {
@@ -152,6 +161,7 @@
         },
         common: common,
         activeName: 'first',
+        activeNamecheck:'pass',
         stepActive: 0,
         isView: false,
         isEdit: false,
@@ -339,11 +349,7 @@
             that.$message.error(err.toString());
           })
       },
-      setStepActive(id) {
-        if((id>0 && this.stepActive<3)||(id<0 && this.stepActive>0)){
-          this.stepActive = this.stepActive+id;
-        }
-      },
+
 
     },
   }
